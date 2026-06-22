@@ -1,0 +1,41 @@
+<section id="page-ssl-scanner" class="page">
+          <h1>SSL Scanner</h1>
+          <p class="subtitle">CLI Menu <strong>15</strong> · Live from SQLite <code>report_json</code> → <code>SSL Report</code></p>
+          <p class="subtitle ssl-scan-meta" id="ssl-scan-meta"></p>
+
+          <div class="pii-host-toolbar scanner-target-toolbar" id="ssl-target-toolbar">
+            <div class="pii-target-field">
+              <label for="ssl-instance-select">PostgreSQL Instance</label>
+              <select id="ssl-instance-select" class="pii-target-select" aria-label="Select instance">
+                <option value="">Loading…</option>
+              </select>
+            </div>
+            <div class="pii-target-field">
+              <label for="ssl-database-select">Database</label>
+              <select id="ssl-database-select" class="pii-target-select" aria-label="Select database" disabled>
+                <option value="">Select instance first</option>
+              </select>
+            </div>
+            <div class="ssl-audit-link-field">
+              <span class="ssl-audit-link-spacer" aria-hidden="true">Link</span>
+              <span class="link" id="ssl-host-audit-link" data-goto="host-detail" data-section="sub-ssl-tls">Open SSL Tab in Host Audit →</span>
+            </div>
+          </div>
+
+          <div class="stats ssl-stats" style="margin-bottom:20px;">
+            <div class="stat-card ssl-stat-card"><div class="stat-label">Checks</div><div class="stat-value" id="ssl-stat-total">—</div></div>
+            <div class="stat-card ssl-stat-card ssl-stat-card--pass"><div class="stat-label">Pass</div><div class="stat-value success" id="ssl-stat-pass">—</div></div>
+            <div class="stat-card ssl-stat-card ssl-stat-card--warn"><div class="stat-label">Warning</div><div class="stat-value warning" id="ssl-stat-warning">—</div></div>
+            <div class="stat-card ssl-stat-card ssl-stat-card--fail"><div class="stat-label">Failed</div><div class="stat-value danger" id="ssl-stat-failed">—</div></div>
+          </div>
+
+          <div class="callout ssl-callout" id="ssl-callout">
+            <strong id="ssl-callout-host">—</strong> — Expiring certs · self-signed detection · SSL GUCs · <code>hostssl</code> in pg_hba.conf
+          </div>
+
+          <div class="hba-check-list" id="ssl-check-list">
+            <p style="color:var(--muted);padding:16px;">Loading…</p>
+          </div>
+
+          <div id="ssl-params-panel" style="margin-top:24px;"></div>
+        </section>

@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/jedib0t/go-pretty/v6/text"
+	"github.com/mitchellh/mapstructure"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/viper"
 
@@ -38,11 +39,17 @@ type Config struct {
 
 	GeneratePassword *GeneratePassword `toml:"generatePassword"`
 
-	Crons    []Cron `toml:"crons"`
-	RunCrons bool   `toml:"-"`
+	Collector       Collector  `toml:"collector"`
+	CheckMainServer bool       `toml:"-"`
+	MainServer      MainServer `toml:"mainserver"`
+
+	Crons []Cron `toml:"crons"`
+
+	RunCrons bool `toml:"-"`
 
 	Email *AuthConfig `toml:"email"`
 
+	PiiScanner       PiiScannerInput    `toml:"piiscanner"`
 	PiiScannerConfig *piiscanner.Config `toml:"-"`
 
 	OutputType           string `toml:"outputType"`
@@ -57,6 +64,9 @@ type Config struct {
 	// BackupPath is the path to the backup directory which we will use to
 	// understand if we are taking backup on daily basis or not
 	BackupHistoryInput backuphistory.BackupHistoryInput `toml:"-"`
+
+	Storage    StorageConfig `toml:"storage"`
+	StorageSet bool          `toml:"-"`
 }
 
 func NewPiiInteractiveMode(pgConfig *postgresdb.Postgres, printAll, spacyOnly, summary bool) (*piiscanner.Config, error) {
@@ -300,11 +310,13 @@ func NewConfig() (*Config, error) {
 	var inputDirectory string
 	var allchecks bool
 	var setupCron bool
+	var checkMainServer bool
 	var printProcessTime bool
 	flag.BoolVar(&verbose, "verbose", verbose, "As of today verbose only works for a specific control. Ex ciscollector -r --verbose --control 6.7")
 	flag.StringVar(&control, "control", control, "Check verbose detail for individual control.\nMake sure to use this with --verbose option.\nEx: ciscollector -r --verbose --control 6.7")
 	flag.BoolVar(&allchecks, "allchecks", allchecks, "Run all checks")
 	flag.BoolVar(&setupCron, "setup-cron", setupCron, "Setup cron for ciscollector")
+	flag.BoolVar(&checkMainServer, "check-mainserver", checkMainServer, "Test collector connection to main-server (reachability, token, register)")
 	flag.BoolVar(&printProcessTime, "process-time", printProcessTime, "Print process time")
 
 	var customTemplatePath string
@@ -345,11 +357,16 @@ func NewConfig() (*Config, error) {
 
 	var piiscannerRunOption, excludeTable, includeTable, database, schema string
 	var printAllResults, spacyOnly, printSummaryOnly bool
-	flag.StringVar(&piiscannerRunOption, "piiscanner", "", "Run pii scanner")
+	var piiScanner bool
+	flag.BoolVar(&piiScanner, "piiscanner", false, "Run pii scanner (uses [piiscanner] from kshieldconfig.toml)")
+	flag.StringVar(&piiscannerRunOption, "piiscanner-run-option", "", "Override [piiscanner].run_option (datascan, metascan, deepscan, spacyscan)")
 	flag.StringVar(&excludeTable, "exclude-table", "", "Exclude table for pii scanner")
 	flag.StringVar(&includeTable, "include-table", "", "Include table for pii scanner")
 	flag.StringVar(&database, "database", "", "Database name for pii scanner")
 	flag.StringVar(&schema, "schema", "public", "Schema name for pii scanner")
+	var targetHost, targetPort string
+	flag.StringVar(&targetHost, "target-host", "", "Postgres host for PII scan (overrides [postgres])")
+	flag.StringVar(&targetPort, "target-port", "", "Postgres port for PII scan (matches cron postgres block)")
 	flag.BoolVar(&printAllResults, "print-all", false, "Print all results for pii scanner")
 	flag.BoolVar(&spacyOnly, "spacy-only", false, "Run spacy only for pii scanner")
 	flag.BoolVar(&printSummaryOnly, "print-summary", false, "Print summary only for pii scanner")
@@ -380,6 +397,9 @@ func NewConfig() (*Config, error) {
 	var compareConfigBaseServer string
 	flag.StringVar(&compareConfigBaseServer, "compare-config-base-server", "", "Base server for comparison")
 
+	var persistJSON bool
+	flag.BoolVar(&persistJSON, "json", false, "Persist scan report to ~/.klouddb SQLite for dashboard")
+
 	flag.Parse()
 
 	if cpuLimit != 0 {
@@ -396,6 +416,15 @@ func NewConfig() (*Config, error) {
 		return c, nil
 	}
 
+	if checkMainServer {
+		c, err := LoadConfig(config)
+		if err != nil {
+			return nil, err
+		}
+		c.CheckMainServer = true
+		return c, nil
+	}
+
 	if version {
 		log.Debug().Str("version", Version).Send()
 		os.Exit(0)
@@ -405,7 +434,7 @@ func NewConfig() (*Config, error) {
 		os.Exit(0)
 	}
 
-	if !run && !verbose && !allchecks && logParser == "" && piiscannerRunOption == "" &&
+	if !run && !verbose && !allchecks && logParser == "" && !piiScanner &&
 		!spacyOnly && !configAudit && !sslCheck && !transactionWraparound &&
 		!runPostgres && !runMySql && !runRds && !hbaScanner &&
 		!runPostgresConnTest && !runGeneratePassword && !runGenerateEncryptedPassword &&
@@ -428,10 +457,23 @@ func NewConfig() (*Config, error) {
 	c.OutputType = outputType
 
 	var piiConfig *piiscanner.Config
-	if piiscannerRunOption != "" || (spacyOnly && !run) {
+	if piiScanner || (spacyOnly && !run) {
+		pgForPII := c.FirstPostgres()
+		if strings.TrimSpace(targetHost) != "" || strings.TrimSpace(targetPort) != "" {
+			pgForPII = c.ResolvePostgresTarget(targetHost, targetPort, database)
+			c.Postgres = pgForPII
+		}
 		var err error
-		piiConfig, err = piiscanner.NewConfig(c.Postgres, piiscannerRunOption, excludeTable,
-			includeTable, database, schema, printAllResults, spacyOnly, printSummaryOnly)
+		piiConfig, err = c.BuildPiiScannerConfig(pgForPII, PiiScannerOverrides{
+			RunOption:     piiscannerRunOption,
+			Database:      database,
+			Schema:        schema,
+			ExcludeTables: excludeTable,
+			IncludeTables: includeTable,
+			PrintAll:      printAllResults,
+			SpacyOnly:     spacyOnly,
+			PrintSummary:  printSummaryOnly,
+		})
 		if err != nil {
 			fmt.Println("Error in creating pii scanner config: ", text.FgHiRed.Sprint(err))
 			os.Exit(1)
@@ -819,7 +861,7 @@ func NewConfig() (*Config, error) {
 
 	if logParser != "" {
 		if run || (allchecks && prefix == "") {
-			c.LogParser, c.LogParserConfigErr = getLogParserInputs(c.Postgres, logParser)
+			c.LogParser, c.LogParserConfigErr = getLogParserInputs(c.FirstPostgres(), logParser)
 		} else {
 			var err error
 			c.LogParser, err = NewLogParser(logParser, beginTime, endTime, prefix, logfile, hbaConfigFile)
@@ -833,6 +875,10 @@ func NewConfig() (*Config, error) {
 	c.CompareConfigBaseServer = compareConfigBaseServer
 	if c.CompareConfigBaseServer != "" && len(c.CompareConfig) == 0 {
 		return nil, fmt.Errorf("with base server, at least one connection string is required")
+	}
+
+	if err := c.MainServer.Validate(); err != nil {
+		return nil, err
 	}
 
 	return c, nil
@@ -854,10 +900,13 @@ func LoadConfig(configPath string) (*Config, error) {
 	if err != nil {
 		return c, fmt.Errorf("fatal error config file: %v", err)
 	}
-	err = v.Unmarshal(c)
+	err = v.Unmarshal(c, func(dc *mapstructure.DecoderConfig) {
+		dc.TagName = "toml"
+	})
 	if err != nil {
 		return c, fmt.Errorf("unmarshal: %v", err)
 	}
+	c.StorageSet = v.IsSet("storage")
 
 	if c.Postgres != nil {
 		if c.Postgres.SSLmode == "" {
@@ -866,6 +915,26 @@ func LoadConfig(configPath string) (*Config, error) {
 	}
 
 	return c, nil
+}
+
+// PostgresTargets expands [postgres].dbname into one target per database (comma-separated or single).
+func (c *Config) PostgresTargets() []*postgresdb.Postgres {
+	if c == nil || c.Postgres == nil {
+		return nil
+	}
+	return c.Postgres.ExpandTargets()
+}
+
+// FirstPostgres returns the first expanded postgres target for single-connection flows.
+func (c *Config) FirstPostgres() *postgresdb.Postgres {
+	targets := c.PostgresTargets()
+	if len(targets) > 0 {
+		return targets[0]
+	}
+	if c != nil {
+		return c.Postgres
+	}
+	return nil
 }
 
 func ReadInput(msg, detault string) string {

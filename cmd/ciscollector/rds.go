@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 	"strings"
@@ -13,11 +14,18 @@ import (
 
 type rdsRunner struct {
 	outputType string
+	fileData   map[string]interface{}
+	reportKey  string
 }
 
-func newRDSRunner(outputType string) *rdsRunner {
+func newRDSRunner(outputType string, fileData map[string]interface{}, reportKey string) *rdsRunner {
+	if reportKey == "" {
+		reportKey = "RDS Report"
+	}
 	return &rdsRunner{
 		outputType: outputType,
+		fileData:   fileData,
+		reportKey:  reportKey,
 	}
 }
 
@@ -37,6 +45,16 @@ func (r *rdsRunner) run(ctx context.Context) {
 	} else {
 		tableData := rds.ConvertToMainTable(listOfResults)
 		output = strings.ReplaceAll(string(tableData), `\n`, "\n")
+	}
+
+	if r.fileData != nil && r.outputType == "json" {
+		b, err := json.Marshal(listOfResults)
+		if err == nil {
+			var result []interface{}
+			if json.Unmarshal(b, &result) == nil {
+				r.fileData[r.reportKey] = map[string]interface{}{"result": result}
+			}
+		}
 	}
 
 	fmt.Println("for detailed information check the generated output file rdssecreport.json")

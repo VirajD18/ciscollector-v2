@@ -1,0 +1,36 @@
+[postgres]
+# Use per-node host so target_id is unique on the dashboard (postgres:host:port:dbname).
+host = "${POSTGRES_HOST}"
+port = "5432"
+user = "${POSTGRES_USER}"
+password = "${POSTGRES_PASSWORD}"
+dbname = "${POSTGRES_DB}"
+sslmode = "disable"
+maxIdleConn = 2
+maxOpenConn = 2
+
+[app]
+hostname = "${APP_HOSTNAME}"
+
+[collector]
+schedule = "${COLLECTOR_SCHEDULE}"
+scan_commands = "${SCAN_COMMANDS}"
+
+[collector.logparser]
+schedule = "${LOG_PARSER_SCHEDULE}"
+prefix = "${LOG_PARSER_PREFIX}"
+logfile = "${LOG_PARSER_LOGFILE}"
+hbaconffile = "${LOG_PARSER_HBAFILE}"
+
+[piiscanner]
+run_option = "${PII_RUN_OPTION}"
+database = "${POSTGRES_DB}"
+schema = "public"
+schedule = "${PII_SCHEDULE}"
+
+[mainserver]
+enabled = true
+url = "${MAIN_SERVER_URL}"
+token = "${COLLECTOR_TOKEN}"
+push_interval = "30s"
+offline_threshold_sec = 60

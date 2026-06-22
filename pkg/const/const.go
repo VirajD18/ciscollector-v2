@@ -160,6 +160,7 @@ var MSG_ChoiseCustomTemplate = func() string {
 
 const (
 	RootCMD_All                   = "all"
+	RootCMD_AllCore               = "all_core" // CIS + HBA + SSL + password leak (no log parser, no PII)
 	RootCMD_PostgresCIS           = "postgres_cis"
 	RootCMD_HBAScanner            = "hba_scanner"
 	RootCMD_PasswordManager       = "password_manager"
@@ -173,6 +174,7 @@ const (
 	RootCMD_ConfigAuditing        = "config_auditing"
 	RootCMD_SSLCheck              = "ssl_check"
 	RootCMD_Exit                  = "exit"
+	RootCMD_GucDrift              = "guc_drift"
 	RootCMD_BackupAuditTool       = "backup_audit_tool"
 	// LogParserCMD_MismatchIPs         = "mismatch_ips"
 	LogParserCMD_UniqueIPs           = "unique_ip"

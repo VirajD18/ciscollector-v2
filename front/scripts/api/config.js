@@ -1,0 +1,42 @@
+/** Central API configuration — swap USE_MOCK for live Go backend when ready. */
+export const API_CONFIG = {
+  baseUrl: '',
+  /** Set false when main-server serves live data from ~/.klouddb/klouddbshield.db */
+  useMock: false,
+  mockBase: '/mock-data',
+  endpoints: {
+    overview: '/api/overview',
+    servers: '/api/servers',
+    server: (id) => `/api/servers?host=${encodeURIComponent(id)}`,
+    serverInstance: (instance) => `/api/servers?instance=${encodeURIComponent(instance)}`,
+    hosts: '/api/hosts',
+    fleetCategories: '/api/fleet/categories',
+    violations: '/api/violations',
+    criticalChecks: '/api/critical-checks',
+    strategic: '/api/strategic',
+    runs: '/api/runs',
+    policies: '/api/policies',
+    gucDrift: '/api/guc/drift',
+    collectorNodes: '/api/collector/nodes',
+    collectorNode: (id) => `/api/collector/nodes/${encodeURIComponent(id)}`,
+    collectorNodeRuns: (id) => `/api/collector/nodes/${encodeURIComponent(id)}/runs`,
+    collectorNodeActivity: (id) => `/api/collector/nodes/${encodeURIComponent(id)}/activity`,
+    collectorNodeLogs: (id) => `/api/collector/nodes/${encodeURIComponent(id)}/logs`,
+    hbaScanner: '/api/scanner/hba',
+    sslScanner: '/api/scanner/ssl',
+    piiScanner: '/api/scanner/pii',
+    logParserScanner: '/api/scanner/logparser',
+    logReadiness: '/api/scanner/log-readiness',
+    inactiveUsersReport: '/api/reports/inactive-users',
+    commonUsersReport: '/api/reports/common-users',
+    gucBaseline: '/api/guc/baseline',
+    gucSnapshots: '/api/guc/snapshots',
+    // Agent job API disabled (doc §5: use CLI --piiscanner / --logparser).
+    // jobs: (agentId, jobId) => `/api/${encodeURIComponent(agentId)}/job/${encodeURIComponent(jobId)}`,
+    ws: '/ws',
+  },
+  defaultHeaders: {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  },
+};

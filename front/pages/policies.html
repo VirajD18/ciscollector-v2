@@ -1,0 +1,212 @@
+<section id="page-policies" class="page">
+          <h1>Security policies</h1>
+          <p class="subtitle">Defining security policy is core — custom check sets, server groups, schedules, and email reports (replaces signup “all checks once” + limited <code>[[crons]]</code> only)</p>
+
+          <div class="callout">
+            <strong>Today in product:</strong> <code>--custom-template</code> + <code>postgres_cis</code> cron only.
+            <strong>This UI:</strong> policy engine (which checks run), templates, groups, host mapping, scheduler, SMTP bundles → <code>kshieldconfig.toml</code>.
+            Custom reports docs: <a class="link" href="https://klouddb.gitbook.io/klouddb_shield/custom-reports" target="_blank" rel="noopener">klouddb_shield/custom-reports</a>
+          </div>
+
+          <nav class="policy-tabs" aria-label="Policy sections">
+            <button type="button" class="policy-tab active" data-policy-tab="templates">1 · Templates</button>
+            <button type="button" class="policy-tab" data-policy-tab="custom">2 · Custom policy</button>
+            <button type="button" class="policy-tab" data-policy-tab="groups">3 · Server groups</button>
+            <button type="button" class="policy-tab" data-policy-tab="hosts">4 · Host mapping</button>
+            <button type="button" class="policy-tab" data-policy-tab="schedule">5 · Schedules</button>
+            <button type="button" class="policy-tab" data-policy-tab="email">6 · Email reports</button>
+            <button type="button" class="policy-tab" data-policy-tab="advanced">Thresholds</button>
+          </nav>
+
+          <!-- Req 6: ~5 templates -->
+          <div id="policy-sec-templates" class="policy-section active">
+            <article class="report-block">
+              <div class="report-block-header">
+                <h2>Policy templates</h2>
+                <p>Pick a starter template — don’t build from scratch (more templates later)</p>
+              </div>
+              <div class="report-block-body">
+                <div class="policy-template-grid" id="policy-template-grid"></div>
+                <p style="margin-top:16px;font-size:12px;color:var(--muted);" id="policy-template-hint">Selected: <strong id="policy-selected-name">Prod strict</strong> — use as base for a new custom policy.</p>
+                <button type="button" class="btn btn-primary" id="policy-use-template">Use template → Custom policy</button>
+              </div>
+            </article>
+          </div>
+
+          <!-- Req 1 + 2: custom checks + GitBook integration -->
+          <div id="policy-sec-custom" class="policy-section">
+            <article class="report-block" style="margin-bottom:20px;">
+              <div class="report-block-header">
+                <h2>Custom policy — check set</h2>
+                <p>Req 1: define which checks run · Req 2: dashboard replaces CLI-only custom reports</p>
+              </div>
+              <div class="report-block-body">
+                <div class="form-group">
+                  <label>Policy name</label>
+                  <input type="text" id="policy-name" value="prod_critical_policy" style="max-width:400px;" />
+                </div>
+                <div class="form-group">
+                  <label>Description</label>
+                  <input type="text" id="policy-desc" value="30 prod-critical hosts — full CIS + access + logs" style="max-width:520px;" />
+                </div>
+                <p style="font-size:13px;color:var(--muted);margin-bottom:12px;">
+                  <a class="link" href="https://klouddb.gitbook.io/klouddb_shield/custom-reports" target="_blank" rel="noopener">GitBook: custom-reports</a>
+                  — upload JSON/CSV template (<code>--custom-template</code>) or select checks below.
+                </p>
+                <div class="form-group">
+                  <label>Custom CIS template file</label>
+                  <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <input type="file" id="policy-template-file" accept=".json,.csv" style="max-width:280px;" />
+                    <span style="font-size:12px;color:var(--muted);">or <strong>corp-cis-postgres-v2.json</strong> (94 controls) · loaded</span>
+                  </div>
+                </div>
+                <p style="font-weight:600;font-size:13px;margin:16px 0 10px;">Checks in this policy</p>
+                <div class="policy-check-grid" id="policy-check-grid"></div>
+                <p style="margin-top:16px;">
+                  <button type="button" class="btn" id="policy-check-all">Select all</button>
+                  <button type="button" class="btn" id="policy-check-none">Clear all</button>
+                  <button type="button" class="btn btn-primary" id="policy-save">Save policy</button>
+                  <span id="policy-save-status" style="margin-left:10px;font-size:12px;color:var(--muted);"></span>
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Req 3: server groups -->
+          <div id="policy-sec-groups" class="policy-section">
+            <article class="report-block">
+              <div class="report-block-header">
+                <h2>Server groups → policy mapping</h2>
+                <p>Example: 100 hosts — 30 → <code>prod_critical_policy</code>, 70 → <code>prod_standard_policy</code></p>
+              </div>
+              <div class="report-block-body fleet-detail-table-wrap" style="border:none;">
+                <table>
+                  <thead><tr><th>Group</th><th>Hosts</th><th>Policy</th><th>Schedule</th><th>Action</th></tr></thead>
+                  <tbody id="policy-groups-tbody"></tbody>
+                </table>
+                <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;">
+                  <div class="form-group" style="margin:0;"><label>New group name</label><input type="text" id="policy-new-group" placeholder="e.g. prod-analytics" style="max-width:200px;" /></div>
+                  <div class="form-group" style="margin:0;"><label>Policy</label><select id="policy-new-group-policy" style="max-width:220px;"></select></div>
+                  <button type="button" class="btn btn-primary" id="policy-add-group">Add group</button>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Req 4: host ↔ policy -->
+          <div id="policy-sec-hosts" class="policy-section">
+            <article class="report-block">
+              <div class="report-block-header">
+                <h2>Attach policy to host</h2>
+                <p>Simple host ↔ policy assignment (overrides group default when set)</p>
+              </div>
+              <div class="report-block-body">
+                <div class="host-policy-map">
+                  <div class="form-group" style="margin:0;"><label>Host</label><select id="policy-host-pick"></select></div>
+                  <div class="form-group" style="margin:0;"><label>Policy</label><select id="policy-host-policy"></select></div>
+                  <button type="button" class="btn btn-primary" id="policy-host-assign">Assign</button>
+                </div>
+                <div class="fleet-detail-table-wrap" style="border:none;">
+                  <table>
+                    <thead><tr><th>Hostname</th><th>Group</th><th>Policy</th><th>Override</th><th>Action</th></tr></thead>
+                    <tbody id="policy-hosts-tbody"></tbody>
+                  </table>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Req 5: schedules -->
+          <div id="policy-sec-schedule" class="policy-section">
+            <article class="report-block">
+              <div class="report-block-header">
+                <h2>Schedule policy runs</h2>
+                <p>Per policy / group — extends <code>[[crons]]</code> (today: single daily postgres_cis only)</p>
+              </div>
+              <div class="report-block-body">
+                <div class="schedule-grid">
+                  <div class="form-group">
+                    <label>Policy / group</label>
+                    <select id="policy-sched-target"></select>
+                  </div>
+                  <div class="form-group">
+                    <label>Frequency</label>
+                    <select id="policy-sched-freq">
+                      <option value="0 2 1 * *">Monthly (1st, 02:00)</option>
+                      <option value="0 2 * * 0">Weekly (Sun 02:00)</option>
+                      <option value="0 2 * * *">Daily (02:00)</option>
+                      <option value="custom">Custom cron</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Custom cron expression</label>
+                    <input type="text" id="policy-sched-cron" value="0 2 1 * *" placeholder="min hour dom month dow" />
+                  </div>
+                  <div class="form-group">
+                    <label>Min gap between runs</label>
+                    <select><option>24 hours (product default)</option><option>12 hours</option></select>
+                  </div>
+                </div>
+                <p style="margin-top:14px;">
+                  <button type="button" class="btn btn-primary" id="policy-sched-save">Save schedule</button>
+                </p>
+                <pre class="toml-preview" id="policy-cron-toml"># Generated [[crons]] snippet appears here</pre>
+              </div>
+            </article>
+          </div>
+
+          <!-- Req 7: email -->
+          <div id="policy-sec-email" class="policy-section">
+            <article class="report-block">
+              <div class="report-block-header">
+                <h2>Email report bundles</h2>
+                <p>Scheduled HTML/PDF to recipients — extends optional <code>[email]</code> in kshieldconfig.toml</p>
+              </div>
+              <div class="report-block-body">
+                <div class="grid-2">
+                  <div>
+                    <div class="form-group"><label>SMTP host</label><input type="text" id="email-host" value="smtp.gmail.com" /></div>
+                    <div class="form-group"><label>SMTP port</label><input type="number" id="email-port" value="587" /></div>
+                    <div class="form-group"><label>Username</label><input type="text" id="email-user" placeholder="you@gmail.com" /></div>
+                    <div class="form-group"><label>Password (app password)</label><input type="password" id="email-pass" placeholder="••••••••" /></div>
+                  </div>
+                  <div>
+                    <div class="form-group"><label>To (comma-separated)</label><input type="text" id="email-to" value="dba-team@company.com, security@company.com" style="max-width:100%;" /></div>
+                    <div class="form-group"><label>CC (optional)</label><input type="text" id="email-cc" placeholder="compliance@company.com" style="max-width:100%;" /></div>
+                    <div class="form-group"><label>Policy report bundle</label><select id="email-policy-bundle"></select></div>
+                    <div class="form-group"><label>Send schedule</label><select id="email-sched">
+                      <option>After each policy run</option>
+                      <option selected>Monthly summary (1st 08:00)</option>
+                      <option>Weekly summary (Mon 08:00)</option>
+                    </select></div>
+                    <label style="display:block;font-size:12px;color:var(--muted);margin-bottom:8px;">Attachments</label>
+                    <label style="display:block;margin-bottom:6px;font-size:13px;"><input type="checkbox" checked /> klouddbshield_report.html</label>
+                    <label style="display:block;margin-bottom:6px;font-size:13px;"><input type="checkbox" checked /> CIS summary CSV</label>
+                    <label style="display:block;font-size:13px;"><input type="checkbox" /> Full log parser export</label>
+                  </div>
+                </div>
+                <p style="margin-top:14px;">
+                  <button type="button" class="btn btn-primary" id="policy-email-save">Save email config</button>
+                  <span id="policy-email-status" style="margin-left:10px;font-size:12px;color:var(--muted);"></span>
+                </p>
+                <pre class="toml-preview" id="policy-email-toml"># [email] + report job snippet</pre>
+              </div>
+            </article>
+          </div>
+
+          <!-- Legacy settings (thresholds, baselines) -->
+          <div id="policy-sec-advanced" class="policy-section">
+            <div class="grid-2">
+              <div class="panel" style="padding:20px;">
+                <h3 style="margin-bottom:16px;font-size:15px;">CIS posture thresholds</h3>
+                <div class="form-group"><label>At-risk when CIS fail % ≥</label><input type="number" value="40" /></div>
+                <div class="form-group"><label>Compliant when CIS pass % ≥</label><input type="number" value="80" /></div>
+              </div>
+              <!-- <div class="panel" style="padding:20px;">
+                <h3 style="margin-bottom:16px;font-size:15px;">Golden baselines</h3>
+                <p style="color:var(--muted);font-size:13px;margin-bottom:12px;">GUC drift + heatmap (separate from policy check sets)</p>
+                <button class="btn btn-primary" data-goto="baseline-wizard">Baseline wizard</button>
+              </div> -->
+            </div>
+          </div>
+        </section>

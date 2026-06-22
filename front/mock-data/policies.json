@@ -1,0 +1,9 @@
+{
+  "templates": [
+    { "id": "prod_strict", "name": "Prod strict", "desc": "All checks - critical production" },
+    { "id": "dev_light", "name": "Dev light", "desc": "CIS + config audit only - dev/staging" }
+  ],
+  "groups": [
+    { "name": "prod-critical", "hosts": 30, "policy": "prod_critical_policy", "schedule": "0 2 1 * *" }
+  ]
+}

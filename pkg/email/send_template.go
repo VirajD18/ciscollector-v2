@@ -30,14 +30,14 @@ func (e *EmailHelper) VerifyConfig() error {
 	return nil
 }
 
-func (e *EmailHelper) Send(to, subject, body string, attachmentPaths []string) error {
+func (e *EmailHelper) Send(subject, body string, attachmentPaths []string) error {
 	if e.host == "" || e.port == 0 || e.username == "" || e.password == "" {
 		return fmt.Errorf("missing email configuration")
 	}
 
 	m := gomail.NewMessage()
 	m.SetHeader("From", e.username)
-	m.SetHeader("To", to)
+	m.SetHeader("To", e.username)
 	m.SetHeader("Subject", subject)
 	m.SetBody("text/html; charset=UTF-8", body)
 

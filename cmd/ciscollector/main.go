@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	// "net/http"
 	_ "net/http/pprof"
 	"os"
 	"strings"
@@ -13,22 +15,63 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 
+	// "github.com/rs/zerolog"
+	// "github.com/rs/zerolog/log"
+
 	"github.com/klouddb/klouddbshield/htmlreport"
 	"github.com/klouddb/klouddbshield/model"
 	"github.com/klouddb/klouddbshield/pkg/config"
 	cons "github.com/klouddb/klouddbshield/pkg/const"
 	"github.com/klouddb/klouddbshield/pkg/logger"
-	"github.com/klouddb/klouddbshield/postgresconfig"
-
+	"github.com/klouddb/klouddbshield/pkg/mainserverclient"
 	"github.com/klouddb/klouddbshield/postgres"
+	"github.com/klouddb/klouddbshield/postgresconfig"
+	// "github.com/klouddb/klouddbshiled/cmd/main-server/main"
+	// "github.com/klouddb/klouddbshield/pkg/config/config.go"
 )
 
 func init() {
 	logger.SetupLogger()
 }
 
+// Doc v2: Agent/node flow disabled (RUDR108). Active entrypoint: manual + cron main() below.
+// func main() {
+//     cnf := config.MustNewConfig()
+//	nodeCfg,err := generateNodeConfigFile()
+//	if err!=nil{
+//		fmt.Println("Error in config file reading : ", err)
+//		return
+//	}
+//	logger.SetupLogger()
+//    ctx, cancel := context.WithCancel(context.Background())
+//	state := NewAgentState()
+//	results := make(chan CollectorResult, 32)
+//	jobs := make(chan Job, 16)
+//	go RunStateUpdater(ctx, state, results)
+//	go StartJobPoller(ctx,cnf,nodeCfg,jobs)
+//	go StartJobScheduler(ctx,cnf,nodeCfg,jobs)
+//    go StartAgent(ctx, cnf,nodeCfg,state,results)
+//	if cnf.RunCrons {
+//        cronHelper := NewCronHelper(ctx, cnf)
+//        if err := cronHelper.SetupCron(); err != nil {
+//            fmt.Println("cron setup failed")
+//        }
+//        cronHelper.Run(cancel)
+//    }
+//    fmt.Println("agent started, waiting for shutdown")
+//    waitForShutdown(cancel)
+//    fmt.Println("agent stopped")
+// }
+
+// Doc v2 §4 Cron + §5 Manual (no agent/node).
 func main() {
 	cnf := config.MustNewConfig()
+
+	if cnf.CheckMainServer {
+		os.Exit(runMainServerConnectionCheck(cnf))
+	}
+
+	logger.SetupLogger()
 	// Setup log level
 	if !cnf.App.Debug {
 		log.Logger = zerolog.New(os.Stdout).With().Timestamp().Caller().Logger()
@@ -49,8 +92,7 @@ func main() {
 		// Create a new CronHelper instance with the context and configuration
 		cronHelper := NewCronHelper(ctx, cnf)
 
-		err := cronHelper.SetupCron()
-		if err != nil {
+		if err := cronHelper.SetupCron(); err != nil {
 			fmt.Println("cron setup failed: ", text.FgHiRed.Sprint(err))
 			return
 		}
@@ -62,13 +104,23 @@ func main() {
 	htmlReportHelper := htmlreport.NewHtmlReportHelper()
 
 	fileData := map[string]interface{}{}
+	runStarted := time.Now().UTC()
+	manualPushed := false
 	defer func() {
+		finishedAt := time.Now().UTC()
+		if cnf.MainServer.Enabled && len(fileData) > 0 && !manualPushed {
+			if pg := cnf.FirstPostgres(); pg != nil {
+				if client, err := mainserverclient.New(cnf); err == nil {
+					pushMainServerTickResults(cnf, client, fileData, runStarted, finishedAt, pg, "manual", nil, "")
+				}
+			}
+		}
 		if len(fileData) > 0 {
 			saveResultInFile(fileData, cnf.OutputType)
 		}
 		filePath, err := htmlReportHelper.RenderInfile("klouddbshield_report.html", 0600)
 		if err != nil {
-			log.Error().Err(err).Msg("Unable to generate klouddbshield_report.html file: " + err.Error())
+			fmt.Println("Unable to generate klouddbshield_report.html file: " + err.Error())
 		} else if filePath != "" {
 			fmt.Println("For Detailed report please open HTML report in your browser [" + filePath + "]")
 		}
@@ -91,11 +143,49 @@ func main() {
 	overviewErrorMap := map[string]error{}
 	var hbaResult []*model.HBAScannerResult
 	if cnf.App.RunPostgres {
-		postgresSummary, overviewErrorMap[cons.RootCMD_PostgresCIS] = newPostgresRunnerFromConfig(cnf.Postgres,
-			fileData, cnf.PostgresCheckSet, htmlReportHelper, cnf.OutputType).run(ctx)
+		for _, pg := range cnf.PostgresTargets() {
+			targetData := map[string]interface{}{}
+			summary, err := newPostgresRunnerFromConfig(pg, targetData,
+				cnf.PostgresCheckSet, htmlReportHelper, cnf.OutputType).run(ctx)
+			postgresSummary = summary
+			overviewErrorMap[cons.RootCMD_PostgresCIS] = err
+			for k, v := range targetData {
+				fileData[k] = v
+			}
+			if cnf.MainServer.Enabled && len(targetData) > 0 {
+				if client, cErr := mainserverclient.New(cnf); cErr == nil {
+					runErr := ""
+					if err != nil {
+						runErr = err.Error()
+					}
+					pushMainServerTickResults(cnf, client, targetData, runStarted, time.Now().UTC(),
+						pg, "manual", []string{cons.RootCMD_PostgresCIS}, runErr)
+					manualPushed = true
+				}
+			}
+		}
 	}
 	if cnf.App.HBASacanner {
-		hbaResult, overviewErrorMap[cons.RootCMD_HBAScanner] = newHBARunnerFromConfig(cnf.Postgres, fileData, htmlReportHelper, cnf.OutputType).run(ctx)
+		for _, pg := range cnf.PostgresTargets() {
+			targetData := map[string]interface{}{}
+			result, err := newHBARunnerFromConfig(pg, targetData, htmlReportHelper, cnf.OutputType).run(ctx)
+			hbaResult = result
+			overviewErrorMap[cons.RootCMD_HBAScanner] = err
+			for k, v := range targetData {
+				fileData[k] = v
+			}
+			if cnf.MainServer.Enabled && len(targetData) > 0 {
+				if client, cErr := mainserverclient.New(cnf); cErr == nil {
+					runErr := ""
+					if err != nil {
+						runErr = err.Error()
+					}
+					pushMainServerTickResults(cnf, client, targetData, runStarted, time.Now().UTC(),
+						pg, "manual", []string{cons.RootCMD_HBAScanner}, runErr)
+					manualPushed = true
+				}
+			}
+		}
 	}
 
 	if cnf.App.PrintSummaryOnly {
@@ -106,7 +196,7 @@ func main() {
 	}
 
 	if cnf.App.RunRds {
-		newRDSRunner(cnf.OutputType).run(ctx)
+		newRDSRunner(cnf.OutputType, fileData, "RDS Report").run(ctx)
 	}
 	if cnf.App.VerboseHBASacanner {
 		newHBARunnerByControlFromConfig(cnf).run(ctx)
@@ -171,7 +261,7 @@ func main() {
 	}
 
 	if cnf.PiiScannerConfig != nil {
-		err := newPiiDbScanner(cnf.Postgres, cnf.PiiScannerConfig, htmlReportHelper).run(ctx)
+		err := newPiiDbScanner(cnf.Postgres, cnf.PiiScannerConfig, htmlReportHelper, cnf).run(ctx)
 		if err != nil {
 			fmt.Println("Error while running PII Scanner: ", text.FgHiRed.Sprint(err))
 
@@ -200,7 +290,7 @@ func main() {
 	}
 
 	if cnf.SSLCheck {
-		overviewErrorMap[cons.RootCMD_SSLCheck] = newSslAuditor(cnf.Postgres, htmlReportHelper).run(ctx)
+		overviewErrorMap[cons.RootCMD_SSLCheck] = newSslAuditor(cnf.Postgres, fileData, htmlReportHelper, cnf.OutputType).run(ctx)
 	}
 
 	if cnf.App.PrintSummaryOnly {

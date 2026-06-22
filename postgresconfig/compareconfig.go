@@ -3,6 +3,8 @@ package postgresconfig
 import (
 	"fmt"
 	"slices"
+	"sort"
+	"strings"
 
 	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 	"github.com/klouddb/klouddbshield/pkg/utils"
@@ -85,6 +87,23 @@ func GetAllConfigValues(connectionStrings []string) (*AllConfigValues, error) {
 	return result, nil
 }
 
+// DriftStatus classifies a baseline key comparison result.
+type DriftStatus string
+
+const (
+	DriftMatch   DriftStatus = "match"
+	DriftDiff    DriftStatus = "drift"
+	DriftMissing DriftStatus = "missing"
+)
+
+// BaselineCompareRow is one baseline key compared against live SHOW ALL data.
+type BaselineCompareRow struct {
+	GUC      string
+	Baseline string
+	Live     string
+	Status   DriftStatus
+}
+
 // GetAllConfigValuesFromConnectionString fetches all configuration values from a single PostgreSQL database
 func GetAllConfigValuesFromConnectionString(connectionString string) (map[string]string, error) {
 	db, err := postgresdb.ConnectDatabaseUsingConnectionString(connectionString, true)
@@ -99,6 +118,62 @@ func GetAllConfigValuesFromConnectionString(connectionString string) (map[string
 	}
 
 	return configValues, nil
+}
+
+// NormalizeGucValue trims and normalizes PostgreSQL GUC values for comparison.
+func NormalizeGucValue(v string) string {
+	v = strings.TrimSpace(v)
+	if v == "" {
+		return ""
+	}
+	lower := strings.ToLower(v)
+	switch lower {
+	case "on", "yes", "true", "1":
+		return "on"
+	case "off", "no", "false", "0":
+		return "off"
+	default:
+		return lower
+	}
+}
+
+// gucValuesEqual reports whether two GUC values are equivalent after normalization.
+func gucValuesEqual(a, b string) bool {
+	return strings.EqualFold(NormalizeGucValue(a), NormalizeGucValue(b))
+}
+
+// CompareAgainstBaseline compares only keys present in baseline.
+// Missing live keys are reported as DriftMissing.
+func CompareAgainstBaseline(baseline, live map[string]string) []BaselineCompareRow {
+	if len(baseline) == 0 {
+		return nil
+	}
+	keys := make([]string, 0, len(baseline))
+	for k := range baseline {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+
+	out := make([]BaselineCompareRow, 0, len(keys))
+	for _, guc := range keys {
+		expected := baseline[guc]
+		liveVal, ok := live[guc]
+		row := BaselineCompareRow{
+			GUC:      guc,
+			Baseline: expected,
+			Live:     liveVal,
+		}
+		if !ok || strings.TrimSpace(liveVal) == "" {
+			row.Status = DriftMissing
+			row.Live = "-"
+		} else if gucValuesEqual(expected, liveVal) {
+			row.Status = DriftMatch
+		} else {
+			row.Status = DriftDiff
+		}
+		out = append(out, row)
+	}
+	return out
 }
 
 // DifferentConfigValue represents a configuration value that differs across databases

@@ -1,0 +1,8 @@
+{
+  "critical": [
+    { "host": "prod-db-02", "check": "ssl", "severity": "critical" },
+    { "host": "analytics-01", "check": "shared_preload_libraries", "severity": "critical" }
+  ],
+  "high": [],
+  "medium": []
+}

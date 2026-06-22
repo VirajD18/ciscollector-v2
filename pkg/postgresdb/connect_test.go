@@ -1,8 +1,116 @@
 package postgresdb
 
 import (
+	"strings"
 	"testing"
 )
+
+func TestPostgresExpandTargets(t *testing.T) {
+	tests := []struct {
+		name    string
+		dbname  string
+		wantDBs []string
+	}{
+		{name: "single", dbname: "hej", wantDBs: []string{"hej"}},
+		{name: "comma separated", dbname: "hej, hej1", wantDBs: []string{"hej", "hej1"}},
+		{name: "extra spaces", dbname: " hej , hej1 , hej2 ", wantDBs: []string{"hej", "hej1", "hej2"}},
+		{name: "empty", dbname: "  , ", wantDBs: nil},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			got := (&Postgres{DBName: tc.dbname}).ExpandTargets()
+			if len(tc.wantDBs) == 0 {
+				if len(got) != 0 {
+					t.Fatalf("ExpandTargets()=%d want empty", len(got))
+				}
+				return
+			}
+			if len(got) != len(tc.wantDBs) {
+				t.Fatalf("ExpandTargets() count=%d want %d", len(got), len(tc.wantDBs))
+			}
+			for i, want := range tc.wantDBs {
+				if got[i].DBName != want {
+					t.Fatalf("target[%d].DBName=%q want %q", i, got[i].DBName, want)
+				}
+			}
+		})
+	}
+}
+
+func TestPostgresValidate(t *testing.T) {
+	tests := []struct {
+		name          string
+		config        *Postgres
+		wantErr       bool
+		wantMissing   []string
+		wantErrSubstr string
+	}{
+		{
+			name: "all_present",
+			config: &Postgres{
+				Host: "localhost", Port: "5432", User: "postgres",
+				Password: "secret", DBName: "hej",
+			},
+			wantErr: false,
+		},
+		{
+			name:          "comma separated dbnames",
+			config:        &Postgres{Host: "localhost", Port: "5432", User: "postgres", Password: "secret", DBName: "hej, hej1"},
+			wantErr:       false,
+		},
+		{
+			name:          "nil_config",
+			config:        nil,
+			wantErr:       true,
+			wantMissing:   []string{"host", "port", "user", "password", "dbname"},
+			wantErrSubstr: "missing [postgres] host, port, user, password, dbname",
+		},
+		{
+			name:          "missing_host_and_dbname",
+			config:        &Postgres{Port: "5432", User: "postgres", Password: "secret"},
+			wantErr:       true,
+			wantMissing:   []string{"host", "dbname"},
+			wantErrSubstr: "missing [postgres] host, dbname",
+		},
+		{
+			name:          "missing_password_only",
+			config:        &Postgres{Host: "localhost", Port: "5432", User: "postgres", DBName: "hej"},
+			wantErr:       true,
+			wantMissing:   []string{"password"},
+			wantErrSubstr: "missing [postgres] password",
+		},
+		{
+			name:          "whitespace_only_fields",
+			config:        &Postgres{Host: "  ", Port: "\t", User: "postgres", Password: "x", DBName: "hej"},
+			wantErr:       true,
+			wantMissing:   []string{"host", "port"},
+			wantErrSubstr: "missing [postgres] host, port",
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			gotMissing := tc.config.MissingRequiredFields()
+			if len(gotMissing) != len(tc.wantMissing) {
+				t.Fatalf("MissingRequiredFields()=%v want %v", gotMissing, tc.wantMissing)
+			}
+			for i := range tc.wantMissing {
+				if gotMissing[i] != tc.wantMissing[i] {
+					t.Fatalf("MissingRequiredFields()=%v want %v", gotMissing, tc.wantMissing)
+				}
+			}
+
+			err := tc.config.Validate()
+			if (err != nil) != tc.wantErr {
+				t.Fatalf("Validate() err=%v wantErr=%v", err, tc.wantErr)
+			}
+			if tc.wantErr && !strings.Contains(err.Error(), tc.wantErrSubstr) {
+				t.Fatalf("Validate()=%q want substring %q", err.Error(), tc.wantErrSubstr)
+			}
+		})
+	}
+}
 
 func TestBuildConnectionString(t *testing.T) {
 	tests := []struct {

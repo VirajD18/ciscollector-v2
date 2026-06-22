@@ -1,0 +1,67 @@
+{{ define "criticalViolationsTab" }}
+    <div class="wrapper">
+        <div class="myContainer">
+            {{ if and . .Checks (len .Checks) }}
+                <div id="summaryStats">
+                    <h3>Summary</h3>
+                    <div class="progress-bar">
+                        <div class="progress-label">
+                            <span>Passing checks</span>
+                            <span>{{ .Summary.Pass }}/{{ .Summary.Total }} - ({{ printf "%.1f" .Summary.PassPct }}%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-filled" style="width:{{ printf "%.2f" .Summary.PassPct }}%;background:#34A853"></div>
+                        </div>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-label">
+                            <span>Failing checks</span>
+                            <span>{{ .Summary.Fail }}/{{ .Summary.Total }} - ({{ printf "%.1f" .Summary.FailPct }}%)</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-filled" style="width:{{ printf "%.2f" .Summary.FailPct }}%;background:#EA4335"></div>
+                        </div>
+                    </div>
+                </div>
+                <h3>Violation Details</h3>
+                <div style="display:flex;gap:16px;font-size:12px;margin-bottom:10px;">
+                    <span style="color:#20d908;">✓ Pass</span>
+                    <span style="color:red;">✗ Fail</span>
+                    <span style="color:#FFD700;">◎ Manual</span>
+                </div>
+                <div class="table-container">
+                    <table class="table maintable">
+                        <thead>
+                            <tr>
+                                <th style="width:70px;">Check</th>
+                                <th>Violation</th>
+                                <th class="icon_column">Result</th>
+                                <th>Source</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{ range .Checks }}
+                                <tr>
+                                    <td>{{ printf "%02d" .ID }}</td>
+                                    <td>{{ .Title }}</td>
+                                    {{ if eq .Status "Pass" }}
+                                        {{ template "tick" "Pass" }}
+                                    {{ else if eq .Status "Fail" }}
+                                        {{ template "cross" "Fail" }}
+                                    {{ else }}
+                                        {{ template "manualCheckIcon" }}
+                                    {{ end }}
+                                    <td>{{ if .Source }}{{ .Source }}{{ else }}—{{ end }}</td>
+                                    <td>{{ if .Details }}{{ .Details }}{{ else }}—{{ end }}</td>
+                                </tr>
+                            {{ end }}
+                        </tbody>
+                    </table>
+                </div>
+            {{ else }}
+                <p>No critical violation data in this scan.</p>
+            {{ end }}
+        </div>
+    </div>
+{{ end }}

@@ -30,7 +30,9 @@ func Benchmark_piiDbScaner_run(b *testing.B) {
 		h := newPiiDbScanner(
 			pgconfig,
 			piiConfig,
-			htmlreport.NewHtmlReportHelper())
+			htmlreport.NewHtmlReportHelper(),
+			nil,
+		)
 
 		err = h.run(context.Background())
 		if err != nil {

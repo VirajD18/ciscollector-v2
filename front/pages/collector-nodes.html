@@ -1,0 +1,108 @@
+<section id="page-collector-nodes" class="page">
+  <h1>Collector Nodes</h1>
+  <p class="subtitle">
+    Live fleet status from <code>ciscollector --setup-cron</code> — register on startup, health ping every 30s, offline after no ping for 1.5 min.
+    Scan results still appear under <a href="#hosts" class="link-kloud">Hosts</a>.
+  </p>
+
+  <p id="cn-message" class="reg-form-message" role="alert" style="display:none;"></p>
+
+  <div class="stats" id="cn-stats">
+    <div class="stat-card">
+      <div class="stat-label">Nodes</div>
+      <div class="stat-value" id="cn-stat-total">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Online</div>
+      <div class="stat-value success" id="cn-stat-online">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Offline</div>
+      <div class="stat-value danger" id="cn-stat-offline">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Scheduled Jobs</div>
+      <div class="stat-value" id="cn-stat-jobs">—</div>
+    </div>
+  </div>
+
+  <div class="panel" style="margin-bottom:24px;">
+    <div class="panel-header">
+      <span>Collectors</span>
+      <span style="display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);font-weight:400;">
+        <span id="cn-updated-at">—</span>
+        <button type="button" class="btn" id="cn-refresh-btn" style="padding:4px 10px;font-size:12px;">Refresh</button>
+      </span>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Hostname</th>
+          <th>Status</th>
+          <th>Cron Running</th>
+          <th>Scheduled</th>
+          <th>Last Seen</th>
+          <th>Last Run</th>
+          <th>Last Error</th>
+        </tr>
+      </thead>
+      <tbody id="cn-nodes-tbody">
+        <tr><td colspan="7" style="color:var(--muted);padding:20px;">Loading…</td></tr>
+      </tbody>
+    </table>
+    <div class="table-pagination" id="cn-nodes-pagination" hidden></div>
+  </div>
+
+  <div id="cn-detail" style="display:none;">
+    <h2 class="cn-detail-title" id="cn-detail-title">Node Detail</h2>
+    <p class="subtitle" id="cn-detail-subtitle" style="margin-bottom:16px;"></p>
+
+    <div class="grid-2">
+      <div class="panel">
+        <div class="panel-header">Run History</div>
+        <div style="max-height:320px;overflow:auto;">
+          <table>
+            <thead>
+              <tr>
+                <th>Started</th>
+                <th>Trigger</th>
+                <th>Result</th>
+                <th>Error</th>
+              </tr>
+            </thead>
+            <tbody id="cn-runs-tbody">
+              <tr><td colspan="4" style="color:var(--muted);padding:16px;">Select a node</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <span>Activity</span>
+          <span id="cn-activity-meta" class="cn-panel-meta"></span>
+        </div>
+        <p id="cn-activity-hint" class="cn-feed-hint" style="display:none;"></p>
+        <div id="cn-activity-list" class="cn-timeline">
+          <div class="cn-feed-empty">Select a collector row above</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel cn-logs-panel" style="margin-top:16px;">
+      <div class="panel-header">
+        <span>Logs &amp; Errors</span>
+        <span id="cn-logs-meta" class="cn-panel-meta"></span>
+      </div>
+      <p id="cn-logs-hint" class="cn-feed-hint" style="display:none;"></p>
+      <div id="cn-logs-filters" class="cn-log-filters" style="display:none;" role="group" aria-label="Filter logs by level"></div>
+      <div id="cn-logs-list" class="cn-log-feed">
+        <div class="cn-feed-empty">Select a collector row above</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:24px;">
+    <strong>Setup:</strong> Enable <code>[mainserver]</code> in <code>kshieldconfig.toml</code>, match token with
+    <code>server-node.yaml</code>, run <code>main-server</code> and <code>ciscollector --setup-cron --json</code>.
+  </div>
+</section>

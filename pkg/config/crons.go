@@ -21,6 +21,7 @@ type PostgresWithLogparser struct {
 }
 
 type LogParserCronInput struct {
+	Schedule    string `toml:"schedule"`
 	Prefix      string `toml:"prefix"`
 	LogFile     string `toml:"logfile"`
 	HbaConfFile string `toml:"hbaconffile"`

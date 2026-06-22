@@ -32,6 +32,85 @@ func (p *Postgres) HtmlReportName() string {
 	return fmt.Sprintf("postgres_%s:%s_%s", p.Host, p.Port, p.DBName)
 }
 
+// MissingRequiredFields returns [postgres] keys that are empty (host, port, user, password, dbname).
+func (p *Postgres) MissingRequiredFields() []string {
+	if p == nil {
+		return []string{"host", "port", "user", "password", "dbname"}
+	}
+	var missing []string
+	for _, field := range []struct {
+		value string
+		key   string
+	}{
+		{strings.TrimSpace(p.Host), "host"},
+		{strings.TrimSpace(p.Port), "port"},
+		{strings.TrimSpace(p.User), "user"},
+		{strings.TrimSpace(p.Password), "password"},
+	} {
+		if field.value == "" {
+			missing = append(missing, field.key)
+		}
+	}
+	if len(SplitDBNames(p.DBName)) == 0 {
+		missing = append(missing, "dbname")
+	}
+	return missing
+}
+
+// Validate reports all missing required [postgres] fields before opening a connection.
+func (p *Postgres) Validate() error {
+	missing := p.MissingRequiredFields()
+	if len(missing) == 0 {
+		return nil
+	}
+	return fmt.Errorf(
+		"postgres config incomplete: missing [postgres] %s in kshieldconfig.toml (required: host, port, user, password, dbname)",
+		strings.Join(missing, ", "),
+	)
+}
+
+// SplitDBNames parses dbname from config. Supports a single name or comma-separated names (e.g. "hej, hej1").
+func SplitDBNames(raw string) []string {
+	var out []string
+	for _, part := range strings.Split(raw, ",") {
+		part = strings.TrimSpace(part)
+		if part != "" {
+			out = append(out, part)
+		}
+	}
+	return out
+}
+
+// PrimaryDBName returns the first database name when dbname is comma-separated.
+func (p *Postgres) PrimaryDBName() string {
+	if p == nil {
+		return ""
+	}
+	names := SplitDBNames(p.DBName)
+	if len(names) == 0 {
+		return strings.TrimSpace(p.DBName)
+	}
+	return names[0]
+}
+
+// ExpandTargets returns one Postgres config per database name (same host/port/user/password).
+func (p *Postgres) ExpandTargets() []*Postgres {
+	if p == nil {
+		return nil
+	}
+	names := SplitDBNames(p.DBName)
+	if len(names) == 0 {
+		return nil
+	}
+	out := make([]*Postgres, 0, len(names))
+	for _, db := range names {
+		cp := *p
+		cp.DBName = db
+		out = append(out, &cp)
+	}
+	return out
+}
+
 // Open opens a the postgres database connection specified by its connection
 // url which can be of format:
 // https://pkg.go.dev/github.com/lib/pq#hdr-Connection_String_Parameters
@@ -69,6 +148,12 @@ func BuildConnectionString(conf Postgres) string {
 }
 
 func Open(conf Postgres) (*sql.DB, string, error) {
+	conf.DBName = conf.PrimaryDBName()
+	if err := conf.Validate(); err != nil {
+		log.Error().Err(err).Msg("postgres config validation failed")
+		return nil, "", err
+	}
+
 	url := BuildConnectionString(conf)
 
 	db, err := ConnectDatabaseUsingConnectionString(url, conf.PingCheck)

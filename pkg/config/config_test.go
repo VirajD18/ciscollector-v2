@@ -3,7 +3,6 @@ package config
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -177,36 +176,62 @@ hbaconffile = "/etc/postgresql/pg_hba.conf"
 	}
 }
 
-func TestCompareConfigFlag(t *testing.T) {
-	// Save original command-line arguments and restore them after the test
-	oldArgs := os.Args
-	defer func() { os.Args = oldArgs }()
-
-	// Set up test arguments
-	os.Args = []string{
-		"cmd",
-		"--compare-config", "postgresql://user1:pass1@host1:5432/db1",
-		"--compare-config", "postgresql://user2:pass2@host2:5432/db2",
+func TestCronAndCollectorParsing(t *testing.T) {
+	tests := []struct {
+		name     string
+		raw      string
+		wantCron int
+		wantColl bool
+		wantMS   bool
+	}{
+		{
+			name: "cron_without_manual",
+			raw: `
+[[crons]]
+schedule = "53 11 * * *"
+[[crons.commands]]
+name = "postgres_cis"
+`,
+			wantCron: 1,
+		},
+		{
+			name: "collector_section",
+			raw: `
+[postgres]
+host = "localhost"
+port = "5432"
+[collector]
+schedule = "0 12 * * *"
+scan_commands = "postgres_cis,hba_scanner"
+[mainserver]
+enabled = true
+url = "http://localhost:8081"
+token = "secret"
+`,
+			wantColl: true,
+			wantMS:   true,
+		},
 	}
-
-	// Reset flags for testing
-	// flag.CommandLine = flag.NewFlagSet(os.Args[0], flag.ExitOnError)
-
-	// Call NewConfig
-	// config, err := NewConfig()
-
-	// Check for errors
-	// if err != nil {
-	// 	t.Fatalf("NewConfig returned an error: %v", err)
-	// }
-
-	// Check if CompareConfig has the correct values
-	// expectedCompareConfig := []string{
-	// 	"postgresql://user1:pass1@host1:5432/db1",
-	// 	"postgresql://user2:pass2@host2:5432/db2",
-	// }
-
-	// if !reflect.DeepEqual(config.CompareConfig, expectedCompareConfig) {
-	// 	t.Errorf("CompareConfig does not match expected value. Got %v, want %v", config.CompareConfig, expectedCompareConfig)
-	// }
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			v := viper.New()
+			v.SetConfigType("toml")
+			if err := v.ReadConfig(strings.NewReader(tc.raw)); err != nil {
+				t.Fatalf("read config: %v", err)
+			}
+			var cfg Config
+			if err := v.Unmarshal(&cfg); err != nil {
+				t.Fatalf("unmarshal: %v", err)
+			}
+			if len(cfg.Crons) != tc.wantCron {
+				t.Fatalf("crons: got %d want %d", len(cfg.Crons), tc.wantCron)
+			}
+			if tc.wantColl && cfg.Collector.Schedule == "" {
+				t.Fatal("expected collector schedule")
+			}
+			if tc.wantMS && !cfg.MainServer.Enabled {
+				t.Fatal("expected mainserver enabled")
+			}
+		})
+	}
 }

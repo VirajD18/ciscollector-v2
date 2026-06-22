@@ -14,6 +14,8 @@ type Cron struct {
 	cron *cron.Cron
 }
 
+type EntryID = cron.EntryID
+
 func New() *Cron {
 	c := cron.New(
 		cron.WithChain(
@@ -39,8 +41,18 @@ func (c *Cron) Stop() context.Context { return c.cron.Stop() }
 // easily but as we don't need that thing in pg-collector to stop only one single
 // job in between the runs, and hence it is omitted.
 func (c *Cron) AddFunc(spec string, cmd func()) error {
-	_, err := c.cron.AddJob(spec, cron.FuncJob(cmd))
+	_, err := c.AddFuncWithID(spec, cmd)
 	return err
+}
+
+// AddFuncWithID adds a function and returns its entry ID.
+func (c *Cron) AddFuncWithID(spec string, cmd func()) (EntryID, error) {
+	return c.cron.AddFunc(spec, cmd)
+}
+
+// Remove removes a scheduled entry by ID.
+func (c *Cron) Remove(id EntryID) {
+	c.cron.Remove(id)
 }
 
 // Recover is the recover for any the cron job panic. It logs the returned

@@ -3,6 +3,7 @@ package model
 import (
 	"bytes"
 	"fmt"
+	"strings"
 
 	"github.com/olekukonko/tablewriter"
 )
@@ -25,6 +26,20 @@ func (m ManualCheckTableDescriptionAndList) Type() string {
 func (m ManualCheckTableDescriptionAndList) Text() string {
 
 	buf := bytes.Buffer{}
+
+	if strings.TrimSpace(m.Description) != "" {
+		buf.WriteString(m.Description)
+		buf.WriteByte('\n')
+	}
+	for _, item := range m.List {
+		buf.WriteString("- ")
+		buf.WriteString(item)
+		buf.WriteByte('\n')
+	}
+
+	if m.Table == nil {
+		return strings.TrimRight(buf.String(), "\n")
+	}
 
 	table := tablewriter.NewWriter(&buf)
 	table.SetHeader(m.Table.Columns)

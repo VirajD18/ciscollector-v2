@@ -1,0 +1,25 @@
+<section id="page-hosts" class="page">
+          <div id="hosts-view-list" class="hosts-view active">
+            <h1 id="hosts-title">Hosts</h1>
+            <p class="subtitle" id="hosts-subtitle">One row per PostgreSQL instance (host:port) · click Open for per-database audit</p>
+            <div class="filters" id="hosts-filter-pills">
+              <span class="filter-pill active" data-hosts-filter="all">All (50)</span>
+              <span class="filter-pill" data-hosts-filter="passing">Passing (38)</span>
+              <span class="filter-pill" data-hosts-filter="failing">Failing threshold (7)</span>
+              <span class="filter-pill" data-hosts-filter="drift">GUC drift (3)</span>
+              <span class="filter-pill" data-hosts-filter="offline">Offline (0)</span>
+            </div>
+            <div class="panel">
+              <table>
+                <thead>
+                    <tr>
+                    <th>Host</th><th>IP</th><th>Databases</th><th>Posture</th><th>Agent</th><th>Last Audit</th><th></th>
+                  </tr>
+                </thead>
+                <tbody id="hosts-tbody"></tbody>
+              </table>
+              <div class="table-pagination" id="hosts-pagination" hidden></div>
+            </div>
+          </div>
+
+        </section>

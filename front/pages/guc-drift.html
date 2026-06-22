@@ -1,0 +1,120 @@
+<section id="page-guc-drift" class="page guc-drift-page">
+          <div class="guc-drift-hero">
+            <div>
+              <h1>GUC Drift</h1>
+              <p class="subtitle" id="guc-drift-subtitle">Upload a golden baseline, then compare live SHOW ALL config pushed by collectors</p>
+            </div>
+            <div class="guc-fleet-banner" id="guc-fleet-banner" hidden></div>
+          </div>
+
+          <article class="guc-baseline-card panel" id="guc-baseline-panel">
+            <div class="guc-baseline-card-head">
+              <div>
+                <span class="guc-section-eyebrow">Golden Baseline</span>
+                <h2 class="guc-baseline-title" id="guc-baseline-title">Loading…</h2>
+              </div>
+              <div class="guc-baseline-meta-row" id="guc-baseline-meta-row"></div>
+            </div>
+            <div class="guc-baseline-keys" id="guc-baseline-keys"></div>
+            <details class="guc-baseline-upload-details" id="guc-baseline-upload-details">
+              <summary class="guc-baseline-upload-summary">Set Global Baseline</summary>
+              <form class="guc-baseline-upload" id="guc-baseline-form" novalidate>
+              <p class="guc-upload-hint">Paste or upload <code>postgresql.conf</code> (or JSON with <code>{"settings":{...}}</code>). Drift is compared when you open this page.</p>
+              <div class="guc-baseline-source-tabs" role="tablist" aria-label="Baseline input method">
+                <button type="button" class="guc-baseline-tab active" role="tab" id="guc-baseline-tab-file" aria-selected="true" aria-controls="guc-baseline-panel-file" data-baseline-source="file">Select File</button>
+                <button type="button" class="guc-baseline-tab" role="tab" id="guc-baseline-tab-paste" aria-selected="false" aria-controls="guc-baseline-panel-paste" data-baseline-source="paste">Paste Text</button>
+              </div>
+              <div class="guc-baseline-source-panel active" id="guc-baseline-panel-file" role="tabpanel" aria-labelledby="guc-baseline-tab-file" data-baseline-panel="file">
+                <label class="guc-upload-field guc-upload-field--file">
+                  <span class="guc-upload-field-label">Config File</span>
+                  <input type="file" id="guc-baseline-file" name="file" accept=".conf,.txt,.json,application/json,text/plain" />
+                </label>
+              </div>
+              <div class="guc-baseline-source-panel" id="guc-baseline-panel-paste" role="tabpanel" aria-labelledby="guc-baseline-tab-paste" data-baseline-panel="paste" hidden>
+                <label class="guc-upload-field guc-upload-field--paste">
+                  <span class="guc-upload-field-label">Config Text</span>
+                  <textarea id="guc-baseline-paste" name="paste" class="guc-baseline-paste" rows="10" spellcheck="false" placeholder="# postgresql.conf&#10;ssl = on&#10;max_connections = 200"></textarea>
+                </label>
+              </div>
+              <div class="guc-baseline-upload-actions">
+                <button type="submit" class="btn btn-primary" id="guc-baseline-submit">Save baseline</button>
+              </div>
+              <p class="guc-baseline-upload-status" id="guc-baseline-upload-status" role="status" aria-live="polite"></p>
+              </form>
+            </details>
+          </article>
+
+          <div class="stats guc-drift-stats" id="guc-drift-stats">
+            <div class="stat-card"><div class="stat-label">Hosts Compared</div><div class="stat-value" id="guc-stat-hosts">—</div></div>
+            <div class="stat-card guc-stat-card--success"><div class="stat-label">Matched</div><div class="stat-value success" id="guc-stat-matched">—</div></div>
+            <div class="stat-card guc-stat-card--danger"><div class="stat-label">Drifting</div><div class="stat-value danger" id="guc-stat-drifting">—</div></div>
+            <div class="stat-card guc-stat-card--warn"><div class="stat-label">Missing Keys</div><div class="stat-value warning" id="guc-stat-missing">—</div></div>
+            <div class="stat-card"><div class="stat-label">Drifted Settings</div><div class="stat-value" id="guc-stat-total">—</div></div>
+          </div>
+
+          <article class="panel guc-host-status-panel">
+            <div class="panel-header">
+              <span>Per-Server Status</span>
+              <span class="guc-panel-hint" id="guc-host-status-hint">—</span>
+            </div>
+            <div class="guc-host-toolbar" id="guc-host-toolbar">
+              <label class="guc-host-search">
+                <span class="guc-host-search-label">Search</span>
+                <input type="search" id="guc-host-search" placeholder="Filter by hostname…" autocomplete="off" />
+              </label>
+              <label class="guc-host-filter">
+                <span class="guc-host-search-label">Status</span>
+                <select id="guc-host-status-filter" aria-label="Filter by status">
+                  <option value="all">All statuses</option>
+                  <option value="drifted">Drifting</option>
+                  <option value="matched">Matched</option>
+                  <option value="missing">Missing keys</option>
+                  <option value="no_snapshot">No snapshot</option>
+                </select>
+              </label>
+            </div>
+            <div class="guc-host-table-wrap fleet-detail-table-wrap">
+              <table class="guc-host-status-table">
+                <thead>
+                  <tr>
+                    <th>Hostname</th>
+                    <th>Status</th>
+                    <th>Drifted keys</th>
+                    <th>Missing keys</th>
+                    <th>Target</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="guc-host-summaries">
+                  <tr><td colspan="6" class="guc-table-empty">Loading hosts…</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-pagination" id="guc-host-pagination" hidden></div>
+          </article>
+
+          <article class="panel guc-drift-table-panel">
+            <div class="panel-header">
+              <span>Configuration Differences</span>
+              <span class="guc-panel-hint" id="guc-drift-table-hint">—</span>
+            </div>
+            <table>
+              <thead><tr><th>Hostname</th><th>GUC</th><th>Live Value</th><th>Baseline</th><th>Status</th></tr></thead>
+              <tbody id="guc-drift-tbody">
+                <tr><td colspan="5" class="guc-table-empty">Loading…</td></tr>
+              </tbody>
+            </table>
+            <div class="table-pagination" id="guc-drift-pagination" hidden></div>
+          </article>
+
+          <article class="panel guc-snapshots-history" id="guc-snapshots-history">
+            <div class="panel-header">
+              <span>Configuration Snapshot History</span>
+            </div>
+            <table>
+              <thead><tr><th>Host</th><th>Collected</th><th>Keys</th><th>Collector node</th></tr></thead>
+              <tbody id="guc-snapshots-tbody"><tr><td colspan="4" class="guc-table-empty">Loading…</td></tr></tbody>
+            </table>
+            <div class="table-pagination" id="guc-snapshots-pagination" hidden></div>
+          </article>
+        </section>

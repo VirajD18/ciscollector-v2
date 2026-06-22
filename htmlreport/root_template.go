@@ -68,9 +68,9 @@ func RenderTemplateFile(templateName, outputfile string, data interface{}, perm 
 }
 
 type Tab struct {
-	Title   string
-	Body    interface{}
-	Prority int
+	Title    string
+	Body     interface{}
+	Priority int
 }
 
 type HtmlReportHelperMap map[string]*HtmlReportHelper
@@ -146,7 +146,7 @@ func (h *HtmlReportHelper) Render() ([]byte, error) {
 	output := bytes.NewBuffer(nil)
 
 	sort.Slice(h.templateData, func(i, j int) bool {
-		return h.templateData[i].Prority > h.templateData[j].Prority
+		return h.templateData[i].Priority > h.templateData[j].Priority
 	})
 
 	err := tmpl.ExecuteTemplate(output, "html", h.templateData)
@@ -172,8 +172,8 @@ func (h *HtmlReportHelper) CreateAllTab() {
 	}
 
 	h.templateData[0] = Tab{
-		Title:   "All",
-		Body:    allTabData,
-		Prority: 10, // adding priority to make sure this tab is the last one
+		Title:    "All",
+		Body:     allTabData,
+		Priority: 10, // highest priority so All appears first in the nav
 	}
 }
