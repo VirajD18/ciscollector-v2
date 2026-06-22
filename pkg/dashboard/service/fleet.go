@@ -23,16 +23,16 @@ type fleetAccumulator struct {
 
 func newFleetAccumulator() *fleetAccumulator {
 	return &fleetAccumulator{
-		cisHosts:      map[string]bool{},
-		sslHosts:      map[string]bool{},
-		elevatedHosts: map[string]bool{},
-		piiHosts:      map[string]bool{},
-		passwordHosts: map[string]bool{},
-		configHosts:   map[string]bool{},
-		inactiveHosts: map[string]bool{},
-		driftHosts:    map[string]bool{},
-		hbaHosts:      map[string]bool{},
-		defaultsHosts: map[string]bool{},
+		cisHosts:       map[string]bool{},
+		sslHosts:       map[string]bool{},
+		elevatedHosts:  map[string]bool{},
+		piiHosts:       map[string]bool{},
+		passwordHosts:  map[string]bool{},
+		configHosts:    map[string]bool{},
+		inactiveHosts:  map[string]bool{},
+		driftHosts:     map[string]bool{},
+		hbaHosts:       map[string]bool{},
+		defaultsHosts:  map[string]bool{},
 		superuserHosts: map[string]bool{},
 	}
 }

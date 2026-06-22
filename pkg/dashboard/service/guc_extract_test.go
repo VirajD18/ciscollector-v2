@@ -72,4 +72,3 @@ func TestGucDriftRowUsesSettingName(t *testing.T) {
 		t.Fatalf("baseline=%q", gucExpectedFromCIS(r))
 	}
 }
-

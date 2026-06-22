@@ -12,6 +12,7 @@ var upgrader = websocket.Upgrader{
 		return true
 	},
 }
+
 // WebSocketHandler upgrades an HTTP connection and registers the client
 func (app *App) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)

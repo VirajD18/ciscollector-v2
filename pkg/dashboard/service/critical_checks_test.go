@@ -13,12 +13,12 @@ import (
 
 func TestCriticalChecksTable(t *testing.T) {
 	tests := []struct {
-		name        string
-		report      map[string]interface{}
-		pii         map[string]interface{}
-		port        string
-		wantFails   []int
-		wantPass    []int
+		name       string
+		report     map[string]interface{}
+		pii        map[string]interface{}
+		port       string
+		wantFails  []int
+		wantPass   []int
 		wantManual []int
 	}{
 		{

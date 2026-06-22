@@ -10,12 +10,12 @@ func TestResolveStorageConfig(t *testing.T) {
 	const pgURL = "postgres://kshield:kshield@localhost:5432/kshield?sslmode=disable"
 
 	tests := []struct {
-		name     string
-		cli      repository.Config
-		node     ServerConfig
-		env      map[string]string
-		wantDrv  string
-		wantPG   string
+		name    string
+		cli     repository.Config
+		node    ServerConfig
+		env     map[string]string
+		wantDrv string
+		wantPG  string
 	}{
 		{
 			name:    "cli sqlite defaults use server-node postgres",
@@ -55,11 +55,11 @@ func TestResolveStorageConfig(t *testing.T) {
 			wantPG:  "postgres://env:env@db:5432/app?sslmode=disable",
 		},
 		{
-			name:    "main server database url env supported",
-			cli:     repository.Config{Driver: "sqlite"},
-			node:    ServerConfig{DBDriver: "postgres"},
+			name: "main server database url env supported",
+			cli:  repository.Config{Driver: "sqlite"},
+			node: ServerConfig{DBDriver: "postgres"},
 			env: map[string]string{
-				"KSHIELD_DB_DRIVER":          "postgres",
+				"KSHIELD_DB_DRIVER":        "postgres",
 				"MAIN_SERVER_DATABASE_URL": pgURL,
 			},
 			wantDrv: repository.DriverPostgres,

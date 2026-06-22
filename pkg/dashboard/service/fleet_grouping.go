@@ -200,6 +200,9 @@ func groupFleetSingletonRows(rows [][]string, instanceDBs map[string][]string) [
 		}
 		base := append([]string(nil), rowsForInst[0]...)
 		base[0] = inst
+		if len(names) > 1 {
+			base = append([]string{inst, instanceDatabasesLabel(inst, instanceDBs, names)}, base[1:]...)
+		}
 		out = append(out, base)
 	}
 	return out
@@ -250,19 +253,6 @@ func fleetUserTableRowsWithDatabase(rows [][]string, hostCol int) [][]string {
 				newRow = append(newRow, cell)
 			}
 		}
-		out = append(out, newRow)
-	}
-	return out
-}
-
-func fleetRowsWithInstanceHostColumn(rows [][]string, hostCol int) [][]string {
-	out := make([][]string, 0, len(rows))
-	for _, row := range rows {
-		if len(row) <= hostCol {
-			continue
-		}
-		newRow := append([]string(nil), row...)
-		newRow[hostCol] = fleetHostInstance(row[hostCol])
 		out = append(out, newRow)
 	}
 	return out

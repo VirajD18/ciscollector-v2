@@ -12,12 +12,12 @@ import (
 )
 
 type complianceSnapshot struct {
-	Drift           []StrategicDrift
-	DriftLabels     []string
-	Audit           [][]string
-	Heatmap         [][]int
-	HeatmapColumns  []string
-	PiiScanned      bool
+	Drift          []StrategicDrift
+	DriftLabels    []string
+	Audit          [][]string
+	Heatmap        [][]int
+	HeatmapColumns []string
+	PiiScanned     bool
 }
 
 func buildComplianceSnapshot(ctx context.Context, s *Service, runs []*reportstore.RunRow, since time.Time, rangeKey string) complianceSnapshot {

@@ -11,9 +11,9 @@ import (
 
 func TestGetLatestRunWithPII(t *testing.T) {
 	tests := []struct {
-		name      string
-		piiFirst  bool
-		wantPII   bool
+		name     string
+		piiFirst bool
+		wantPII  bool
 	}{
 		{
 			name:     "returns row with pii when newer cron row has no pii",

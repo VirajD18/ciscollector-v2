@@ -38,9 +38,9 @@ func TestResolveTLSConfig(t *testing.T) {
 			wantErr:  true,
 		},
 		{
-			name:     "key_only",
-			keyFlag:  keyPath,
-			wantErr:  true,
+			name:    "key_only",
+			keyFlag: keyPath,
+			wantErr: true,
 		},
 		{
 			name:     "missing_cert_file",

@@ -9,11 +9,11 @@ func TestToReportJSONShape(t *testing.T) {
 			"users": {
 				"email": {
 					{
-						Label:          PIILabel_Email,
-						Confidence:     "High",
-						DetectorType:   DetectorType_ValueDetector,
-						DetectorName:   "regex",
-						MatchedCount:   4,
+						Label:            PIILabel_Email,
+						Confidence:       "High",
+						DetectorType:     DetectorType_ValueDetector,
+						DetectorName:     "regex",
+						MatchedCount:     4,
 						ScanedValueCount: 4,
 					},
 				},

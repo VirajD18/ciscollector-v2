@@ -64,15 +64,15 @@ func BuildReadinessReport(in ReadinessInput) map[string]interface{} {
 	}
 
 	return map[string]interface{}{
-		"log_connections":      connDisplay,
-		"log_connections_on":   in.LogConnectionsOn,
-		"log_line_prefix":      in.LogLinePrefix,
-		"log_line_prefix_cis":  prefixCIS,
-		"cis_lma":              cisLMA,
-		"parser_gates":         gates,
-		"can_run_menus":        formatCanRunMenus(menuNums, cisLMA),
-		"runnable_commands":    runnable,
-		"logparser_readiness":  evaluateLogParserReadiness(len(runnable)),
+		"log_connections":     connDisplay,
+		"log_connections_on":  in.LogConnectionsOn,
+		"log_line_prefix":     in.LogLinePrefix,
+		"log_line_prefix_cis": prefixCIS,
+		"cis_lma":             cisLMA,
+		"parser_gates":        gates,
+		"can_run_menus":       formatCanRunMenus(menuNums, cisLMA),
+		"runnable_commands":   runnable,
+		"logparser_readiness": evaluateLogParserReadiness(len(runnable)),
 	}
 }
 

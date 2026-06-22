@@ -118,14 +118,14 @@ func TestBuildPiiScannerConfig(t *testing.T) {
 
 func TestPiiScannerInput_merged(t *testing.T) {
 	tests := []struct {
-		name      string
-		in        PiiScannerInput
-		over      PiiScannerOverrides
-		wantRun   string
-		wantDB    string
+		name       string
+		in         PiiScannerInput
+		over       PiiScannerOverrides
+		wantRun    string
+		wantDB     string
 		wantSchema string
-		wantExcl  string
-		wantIncl  string
+		wantExcl   string
+		wantIncl   string
 	}{
 		{
 			name:       "empty defaults to datascan and public",

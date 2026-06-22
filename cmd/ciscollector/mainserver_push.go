@@ -194,22 +194,6 @@ func pushMainServerTickResults(
 	return features, runErr
 }
 
-// finishCronMainServerPush is the single exit path for cron tick main-server pushes.
-func (c *cronHelper) finishCronMainServerPush(
-	fileData map[string]interface{},
-	startedAt, finishedAt time.Time,
-	pg *postgresdb.Postgres,
-	features []string,
-	runErr string,
-) {
-	client := c.pushClient()
-	if client == nil {
-		return
-	}
-	features, runErr = pushMainServerTickResults(c.cnf, client, fileData, startedAt, finishedAt, pg, "cron", features, runErr)
-	c.pushCronRunFinishWithClient(client, startedAt, features, runErr)
-}
-
 // pushScanDataToMainServer posts CIS/HBA scan JSON to /api/collector/data.
 func pushScanDataToMainServer(
 	cnf *config.Config,

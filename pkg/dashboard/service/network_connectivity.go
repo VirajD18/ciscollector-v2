@@ -165,4 +165,3 @@ func decodeResultSlice(raw interface{}) []model.Result {
 	}
 	return rows
 }
-

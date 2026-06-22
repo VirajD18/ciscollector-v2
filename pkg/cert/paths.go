@@ -10,7 +10,7 @@ const (
 	ServerKeyFile  = "server.key"
 )
 
-func CAPath(dir string) string     { return filepath.Join(dir, CAFile) }
-func CAKeyPath(dir string) string  { return filepath.Join(dir, CAKeyFile) }
+func CAPath(dir string) string         { return filepath.Join(dir, CAFile) }
+func CAKeyPath(dir string) string      { return filepath.Join(dir, CAKeyFile) }
 func ServerCertPath(dir string) string { return filepath.Join(dir, ServerCertFile) }
 func ServerKeyPath(dir string) string  { return filepath.Join(dir, ServerKeyFile) }

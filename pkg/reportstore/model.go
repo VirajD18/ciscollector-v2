@@ -19,22 +19,22 @@ type RunMeta struct {
 
 // RunRow is a stored run with optional denormalized overview fields.
 type RunRow struct {
-	ID            string
-	StartedAt     time.Time
-	FinishedAt    time.Time
-	Trigger       string
-	RunnerName    string
-	TargetType    string
-	TargetID      string
-	TargetHost    string
-	TargetPort    string
-	TargetDB      string
-	RunStatus     string
-	FeaturesRun   []string
-	OverallScore  float64
-	TotalPass     int
-	TotalFail     int
-	Report        map[string]interface{}
-	PiiReport     map[string]interface{}
-	PiiScannedAt  time.Time
+	ID           string
+	StartedAt    time.Time
+	FinishedAt   time.Time
+	Trigger      string
+	RunnerName   string
+	TargetType   string
+	TargetID     string
+	TargetHost   string
+	TargetPort   string
+	TargetDB     string
+	RunStatus    string
+	FeaturesRun  []string
+	OverallScore float64
+	TotalPass    int
+	TotalFail    int
+	Report       map[string]interface{}
+	PiiReport    map[string]interface{}
+	PiiScannedAt time.Time
 }

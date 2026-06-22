@@ -34,10 +34,10 @@ type HostDatabaseBrief struct {
 
 // HostInstanceResponse lists databases on one instance for the host overview selector.
 type HostInstanceResponse struct {
-	Instance    string              `json:"instance"`
-	IP          string              `json:"ip"`
-	Databases   []HostDatabaseBrief `json:"databases"`
-	DefaultDB   string              `json:"default_database"`
+	Instance  string              `json:"instance"`
+	IP        string              `json:"ip"`
+	Databases []HostDatabaseBrief `json:"databases"`
+	DefaultDB string              `json:"default_database"`
 }
 
 // ViolationsResponse matches front/mock-data/violations.json.
@@ -89,9 +89,9 @@ type CriticalCheckDef struct {
 }
 
 type CriticalCheckHostRow struct {
-	Host     string               `json:"host"`
-	Detected string               `json:"detected_at"`
-	Failed   int                  `json:"failed"`
+	Host     string                `json:"host"`
+	Detected string                `json:"detected_at"`
+	Failed   int                   `json:"failed"`
 	Checks   []CriticalCheckResult `json:"checks"`
 }
 
@@ -123,32 +123,32 @@ type StrategicResponse struct {
 }
 
 type StrategicRange struct {
-	Label      string          `json:"label"`
-	Health     int             `json:"health"`
-	Grade      string          `json:"grade"`
-	GradeColor string          `json:"gradeColor"`
-	Critical   int             `json:"critical"`
-	CIS        int             `json:"cis"`
-	Servers    int             `json:"servers"`
-	OnPrem     int             `json:"onPrem"`
-	Cloud      int             `json:"cloud"`
-	Privs      []StrategicBar  `json:"privs,omitempty"`
-	Hygiene    StrategicHygiene `json:"hygiene,omitempty"`
-	Cred       StrategicCred   `json:"cred,omitempty"`
-	HBA          []StrategicHBA `json:"hba,omitempty"`
-	HBAScanned   bool           `json:"hbaScanned,omitempty"`
-	SSLEnforced  int            `json:"sslEnforced,omitempty"`
-	SSLScanned   bool           `json:"sslScanned,omitempty"`
-	RDSPublic      int    `json:"rdsPublic,omitempty"`
-	AuroraUnenc    int    `json:"auroraUnenc,omitempty"`
-	CloudScanned   bool   `json:"cloudScanned,omitempty"`
-	PlatformSource string `json:"platformSource,omitempty"` // "cloud" | "postgres"
-	Drift           []StrategicDrift `json:"drift,omitempty"`
-	DriftLabels     []string         `json:"driftLabels,omitempty"`
-	Audit           [][]string       `json:"audit,omitempty"`
-	Heatmap         [][]int          `json:"heatmap,omitempty"`
-	HeatmapColumns  []string         `json:"heatmapColumns,omitempty"`
-	PiiScanned      bool             `json:"piiScanned,omitempty"`
+	Label          string           `json:"label"`
+	Health         int              `json:"health"`
+	Grade          string           `json:"grade"`
+	GradeColor     string           `json:"gradeColor"`
+	Critical       int              `json:"critical"`
+	CIS            int              `json:"cis"`
+	Servers        int              `json:"servers"`
+	OnPrem         int              `json:"onPrem"`
+	Cloud          int              `json:"cloud"`
+	Privs          []StrategicBar   `json:"privs,omitempty"`
+	Hygiene        StrategicHygiene `json:"hygiene,omitempty"`
+	Cred           StrategicCred    `json:"cred,omitempty"`
+	HBA            []StrategicHBA   `json:"hba,omitempty"`
+	HBAScanned     bool             `json:"hbaScanned,omitempty"`
+	SSLEnforced    int              `json:"sslEnforced,omitempty"`
+	SSLScanned     bool             `json:"sslScanned,omitempty"`
+	RDSPublic      int              `json:"rdsPublic,omitempty"`
+	AuroraUnenc    int              `json:"auroraUnenc,omitempty"`
+	CloudScanned   bool             `json:"cloudScanned,omitempty"`
+	PlatformSource string           `json:"platformSource,omitempty"` // "cloud" | "postgres"
+	Drift          []StrategicDrift `json:"drift,omitempty"`
+	DriftLabels    []string         `json:"driftLabels,omitempty"`
+	Audit          [][]string       `json:"audit,omitempty"`
+	Heatmap        [][]int          `json:"heatmap,omitempty"`
+	HeatmapColumns []string         `json:"heatmapColumns,omitempty"`
+	PiiScanned     bool             `json:"piiScanned,omitempty"`
 }
 
 type StrategicBar struct {
@@ -216,10 +216,10 @@ type RunSummary struct {
 
 // OverviewResponse is the legacy main-server overview shape (servers from reportstore).
 type OverviewResponse struct {
-	Summary       OverviewSummary `json:"summary"`
-	CentralServer OverviewServer  `json:"central_server"`
+	Summary       OverviewSummary  `json:"summary"`
+	CentralServer OverviewServer   `json:"central_server"`
 	Servers       []OverviewServer `json:"servers"`
-	UpdatedAt     time.Time       `json:"updated_at"`
+	UpdatedAt     time.Time        `json:"updated_at"`
 }
 
 type OverviewSummary struct {
@@ -242,12 +242,12 @@ type OverviewServer struct {
 
 // HostReportResponse is the structured host detail payload for /api/servers/{id}.
 type HostReportResponse struct {
-	Host           HostSummary       `json:"host"`
-	Modules        HostReportModules `json:"modules"`
-	GucDriftDetail HostGucDriftView  `json:"guc_drift_detail"`
+	Host           HostSummary           `json:"host"`
+	Modules        HostReportModules     `json:"modules"`
+	GucDriftDetail HostGucDriftView      `json:"guc_drift_detail"`
 	CriticalChecks []CriticalCheckResult `json:"critical_checks,omitempty"`
 	CriticalFailed int                   `json:"critical_failed,omitempty"`
-	RawKeys     []string          `json:"raw_keys"`
+	RawKeys        []string              `json:"raw_keys"`
 
 	HtmlExport *HtmlExportMeta `json:"html_export,omitempty"`
 
@@ -263,16 +263,16 @@ type HostReportResponse struct {
 }
 
 type HostSummary struct {
-	ID            string `json:"id"`
-	Name          string `json:"name"`
-	IP            string `json:"ip"`
-	Status        string `json:"status"`
-	CisPct        string `json:"cis_pct"`
-	FailedControls int   `json:"failed_controls"`
-	GucDrift      string `json:"guc_drift"`
-	Agent         string `json:"agent"`
-	LastAudit     string `json:"last_audit"`
-	PostgresVer   string `json:"postgres_version,omitempty"`
+	ID             string `json:"id"`
+	Name           string `json:"name"`
+	IP             string `json:"ip"`
+	Status         string `json:"status"`
+	CisPct         string `json:"cis_pct"`
+	FailedControls int    `json:"failed_controls"`
+	GucDrift       string `json:"guc_drift"`
+	Agent          string `json:"agent"`
+	LastAudit      string `json:"last_audit"`
+	PostgresVer    string `json:"postgres_version,omitempty"`
 }
 
 type HtmlExportMeta struct {
@@ -300,13 +300,13 @@ type HostReportModules struct {
 }
 
 type HostModuleView struct {
-	Available   bool              `json:"available"`
-	EmptyReason string            `json:"empty_reason,omitempty"`
-	Columns     []string          `json:"columns,omitempty"`
-	Rows        []HostTableRow    `json:"rows,omitempty"`
+	Available   bool               `json:"available"`
+	EmptyReason string             `json:"empty_reason,omitempty"`
+	Columns     []string           `json:"columns,omitempty"`
+	Rows        []HostTableRow     `json:"rows,omitempty"`
 	Sections    []HostSectionScore `json:"sections,omitempty"`
-	Summary     []HostKV          `json:"summary,omitempty"`
-	Callout     string            `json:"callout,omitempty"`
+	Summary     []HostKV           `json:"summary,omitempty"`
+	Callout     string             `json:"callout,omitempty"`
 }
 
 type HostTableRow struct {
@@ -320,8 +320,8 @@ type HostSectionScore struct {
 }
 
 type HostKV struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	Key    string `json:"key"`
+	Value  string `json:"value"`
 	Status string `json:"status,omitempty"`
 }
 
@@ -362,13 +362,13 @@ type GucDriftRow struct {
 
 // HostGucDriftView is per-host GUC drift vs the global baseline.
 type HostGucDriftView struct {
-	Available     bool         `json:"available"`
-	Status        string       `json:"status"`
-	BaselineLabel string       `json:"baseline_label,omitempty"`
-	DriftCount    int          `json:"drift_count"`
-	MissingCount  int          `json:"missing_count"`
+	Available     bool          `json:"available"`
+	Status        string        `json:"status"`
+	BaselineLabel string        `json:"baseline_label,omitempty"`
+	DriftCount    int           `json:"drift_count"`
+	MissingCount  int           `json:"missing_count"`
 	Rows          []GucDriftRow `json:"rows,omitempty"`
-	EmptyReason   string       `json:"empty_reason,omitempty"`
+	EmptyReason   string        `json:"empty_reason,omitempty"`
 }
 
 type GucBaselineResponse struct {
@@ -438,7 +438,7 @@ type NotificationSchedule struct {
 
 // CollectorConfigResponse effective collector feature matrix.
 type CollectorConfigResponse struct {
-	Features []CollectorFeature `json:"features"`
+	Features []CollectorFeature     `json:"features"`
 	Crons    []NotificationSchedule `json:"crons"`
 }
 

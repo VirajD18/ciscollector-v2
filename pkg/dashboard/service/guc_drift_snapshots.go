@@ -147,10 +147,10 @@ func (s *Service) GucBaseline(ctx context.Context) (*GucBaselineResponse, error)
 		settings = map[string]string{}
 	}
 	return &GucBaselineResponse{
-		Label:      label,
-		Settings:   settings,
-		UpdatedAt:  updatedAt,
-		KeyCount:   len(settings),
+		Label:     label,
+		Settings:  settings,
+		UpdatedAt: updatedAt,
+		KeyCount:  len(settings),
 	}, nil
 }
 

@@ -11,10 +11,10 @@ import (
 
 // LogReadinessHostRow is one host in the GUC readiness fleet table.
 type LogReadinessHostRow struct {
-	Host             string `json:"host"`
-	LogConnections   string `json:"logConnections"`
-	LogConnectionsOK bool   `json:"logConnectionsOk"`
-	LogLinePrefix    string `json:"logLinePrefix"`
+	Host               string `json:"host"`
+	LogConnections     string `json:"logConnections"`
+	LogConnectionsOK   bool   `json:"logConnectionsOk"`
+	LogLinePrefix      string `json:"logLinePrefix"`
 	LogLinePrefixCIS   string `json:"logLinePrefixCis"`
 	LogParserReadiness string `json:"logparserReadiness"`
 }

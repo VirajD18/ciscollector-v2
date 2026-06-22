@@ -9,10 +9,10 @@ func TestGroupFleetCISRows(t *testing.T) {
 		"localhost:5432": {"hej", "hej1", "hej3"},
 	}
 	tests := []struct {
-		name string
-		rows [][]string
-		want int
-		inst string
+		name    string
+		rows    [][]string
+		want    int
+		inst    string
 		dbLabel string
 		posture string
 	}{
@@ -23,8 +23,8 @@ func TestGroupFleetCISRows(t *testing.T) {
 				{"localhost:5432/hej1", "69%", "8", "Open"},
 				{"localhost:5432/hej3", "69%", "8", "Open"},
 			},
-			want: 1,
-			inst: "localhost:5432",
+			want:    1,
+			inst:    "localhost:5432",
 			dbLabel: "3 (hej, hej1, hej3)",
 			posture: "3/3 Failing",
 		},
@@ -33,8 +33,8 @@ func TestGroupFleetCISRows(t *testing.T) {
 			rows: [][]string{
 				{"localhost:5432/hej", "55%", "10", "Open"},
 			},
-			want: 1,
-			inst: "localhost:5432",
+			want:    1,
+			inst:    "localhost:5432",
 			dbLabel: "3 (hej, hej1, hej3)",
 			posture: "1/3 Failing",
 		},
@@ -80,8 +80,8 @@ func TestFleetUniqueInstances(t *testing.T) {
 		{
 			name: "two instances",
 			hosts: map[string]bool{
-				"localhost:5432/hej":  true,
-				"localhost:5433/hej":  true,
+				"localhost:5432/hej": true,
+				"localhost:5433/hej": true,
 			},
 			want: 2,
 		},

@@ -309,7 +309,7 @@ func (r *Repository) ListCollectorLogs(ctx context.Context, nodeID string, limit
 			return nil, err
 		}
 		if level.Valid {
-		 row.Level = level.String
+			row.Level = level.String
 		}
 		out = append(out, row)
 	}

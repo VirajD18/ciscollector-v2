@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/const"
+	cons "github.com/klouddb/klouddbshield/pkg/const"
 	"github.com/klouddb/klouddbshield/pkg/dashboard/service"
 	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 	"github.com/klouddb/klouddbshield/pkg/reportstore"
@@ -51,19 +51,19 @@ func TestLogParserScanner(t *testing.T) {
 					},
 					map[string]interface{}{
 						"Command": cons.LogParserCMD_UniqueIPs, "Parse Status": "All lines parsed successfully",
-						"Result":  "3 unique IPs found from log file\n",
-						"Value":   []interface{}{"10.0.0.1", "10.0.0.2", "10.0.0.3"},
+						"Result": "3 unique IPs found from log file\n",
+						"Value":  []interface{}{"10.0.0.1", "10.0.0.2", "10.0.0.3"},
 					},
 					map[string]interface{}{
 						"Command": cons.LogParserCMD_HBAUnusedLines, "Parse Status": "All lines parsed successfully",
-						"Result":  "2 unused lines found in hba_conf file\n",
+						"Result": "2 unused lines found in hba_conf file\n",
 						"Value": []interface{}{
 							map[string]interface{}{"LineNo": float64(10), "Line": "host all all 127.0.0.1/32 trust"},
 						},
 					},
 					map[string]interface{}{
 						"Command": cons.LogParserCMD_PasswordLeakScanner, "Parse Status": "All lines parsed successfully",
-						"Result":  "No leaked passwords found.",
+						"Result": "No leaked passwords found.",
 					},
 				},
 			},

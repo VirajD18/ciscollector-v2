@@ -9,9 +9,9 @@ import (
 
 func TestEvalFromUsersReportAllTop25SQLChecks(t *testing.T) {
 	tests := []struct {
-		name      string
-		sections  []map[string]interface{}
-		checkID   int
+		name       string
+		sections   []map[string]interface{}
+		checkID    int
 		wantStatus string
 		wantSource string
 	}{

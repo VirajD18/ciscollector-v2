@@ -9,14 +9,14 @@ import (
 
 // LogParserCommandView is one log parser command result for API and host modules.
 type LogParserCommandView struct {
-	Command     string                `json:"command"`
-	Title       string                `json:"title"`
-	ParseStatus string                `json:"parseStatus"`
-	Result      string                `json:"result"`
-	Status      string                `json:"status"`
-	DetailType  string                `json:"detailType,omitempty"`
-	DetailRows  []LogParserDetailRow  `json:"detailRows,omitempty"`
-	DetailText  string                `json:"detailText,omitempty"`
+	Command     string               `json:"command"`
+	Title       string               `json:"title"`
+	ParseStatus string               `json:"parseStatus"`
+	Result      string               `json:"result"`
+	Status      string               `json:"status"`
+	DetailType  string               `json:"detailType,omitempty"`
+	DetailRows  []LogParserDetailRow `json:"detailRows,omitempty"`
+	DetailText  string               `json:"detailText,omitempty"`
 }
 
 // LogParserDetailRow is a label/value pair for command-specific findings.

@@ -36,4 +36,3 @@ func TestDecodeCISResultsWithManualCheckData(t *testing.T) {
 		t.Fatal("first title empty")
 	}
 }
-

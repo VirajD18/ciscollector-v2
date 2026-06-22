@@ -14,12 +14,12 @@ import (
 
 func TestLogReadinessFleet(t *testing.T) {
 	tests := []struct {
-		name         string
-		report       map[string]interface{}
+		name          string
+		report        map[string]interface{}
 		wantHost      string
 		wantConn      string
 		wantReadiness string
-		wantRowCount int
+		wantRowCount  int
 	}{
 		{
 			name: "explicit log readiness report",

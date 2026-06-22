@@ -145,7 +145,7 @@ func (s *Service) HostReport(ctx context.Context, serverID string) (*HostReportR
 				return cisMatchesAny(r, "wal", "replication", "archive", "standby", "7.")
 			}), nil),
 		),
-		BackupMonitoring: emptyModule("Backup audit data not stored in report_json — enable backup history in collector config."),
+		BackupMonitoring:   emptyModule("Backup audit data not stored in report_json — enable backup history in collector config."),
 		XidMonitoring:      emptyModule("XID wraparound data not stored in report_json — run transaction wraparound check."),
 		RolesPrivileges:    usersReportSummary(run.Report),
 		PgHba:              tableModule([]string{"Check", "Title", "Result"}, hbaRows(hba)),
@@ -306,12 +306,12 @@ func (s *Service) ServerDetail(ctx context.Context, serverID string) (map[string
 		return nil, err
 	}
 	out := map[string]interface{}{
-		"id":     resp.ID,
-		"name":   resp.Name,
-		"ip":     resp.IP,
-		"status": resp.Status,
-		"host":   resp.Host,
-		"modules": resp.Modules,
+		"id":       resp.ID,
+		"name":     resp.Name,
+		"ip":       resp.IP,
+		"status":   resp.Status,
+		"host":     resp.Host,
+		"modules":  resp.Modules,
 		"raw_keys": resp.RawKeys,
 	}
 	if resp.HtmlExport != nil {

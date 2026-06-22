@@ -26,12 +26,12 @@ func TestBuildHostGucDriftView(t *testing.T) {
 			wantStatus: "no_baseline",
 		},
 		{
-			name:       "matched",
-			baseline:   map[string]string{"ssl": "on", "max_connections": "100"},
+			name:         "matched",
+			baseline:     map[string]string{"ssl": "on", "max_connections": "100"},
 			snapshotHost: "collector-a",
-			targetID:   "postgres:h:5432:db",
-			live:       map[string]string{"ssl": "on", "max_connections": "100"},
-			wantStatus: "matched",
+			targetID:     "postgres:h:5432:db",
+			live:         map[string]string{"ssl": "on", "max_connections": "100"},
+			wantStatus:   "matched",
 		},
 		{
 			name:         "drift and missing",

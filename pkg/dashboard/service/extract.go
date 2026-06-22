@@ -91,18 +91,6 @@ func ParseHostKey(key string) ParsedHostKey {
 	return ParsedHostKey{Instance: key, HostKey: key}
 }
 
-func hostKeyForInstanceDB(instance, database string) string {
-	instance = strings.TrimSpace(instance)
-	database = strings.TrimSpace(database)
-	if instance == "" {
-		return ""
-	}
-	if database == "" {
-		return instance
-	}
-	return instance + "/" + database
-}
-
 func relativeScanTime(t time.Time) string {
 	if t.IsZero() {
 		return "-"

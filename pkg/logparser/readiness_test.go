@@ -8,13 +8,13 @@ import (
 
 func TestBuildReadinessReport(t *testing.T) {
 	tests := []struct {
-		name           string
-		in             ReadinessInput
-		wantConn       string
-		wantCISLMA     string
-		wantPrefixCIS  string
-		wantCanRunMenu string
-		wantRunnable          int
+		name                   string
+		in                     ReadinessInput
+		wantConn               string
+		wantCISLMA             string
+		wantPrefixCIS          string
+		wantCanRunMenu         string
+		wantRunnable           int
 		wantLogParserReadiness string
 	}{
 		{
@@ -24,11 +24,11 @@ func TestBuildReadinessReport(t *testing.T) {
 				LogLinePrefix:    "%m %p %l %d %u %a %h",
 				Commands:         defaultLogParserCommands,
 			},
-			wantConn:       "on",
-			wantCISLMA:     "pass",
-			wantPrefixCIS:  "pass",
-			wantCanRunMenu: "6 · 7 · 8 · 10",
-			wantRunnable:   4,
+			wantConn:               "on",
+			wantCISLMA:             "pass",
+			wantPrefixCIS:          "pass",
+			wantCanRunMenu:         "6 · 7 · 8 · 10",
+			wantRunnable:           4,
 			wantLogParserReadiness: "PASS",
 		},
 		{
@@ -38,11 +38,11 @@ func TestBuildReadinessReport(t *testing.T) {
 				LogLinePrefix:    "%m %p %l %d %u %a %h",
 				Commands:         []string{cons.LogParserCMD_InactiveUser, cons.LogParserCMD_UniqueIPs},
 			},
-			wantConn:       "off",
-			wantCISLMA:     "partial",
-			wantPrefixCIS:  "pass",
-			wantCanRunMenu: "6 · 7",
-			wantRunnable:   2,
+			wantConn:               "off",
+			wantCISLMA:             "partial",
+			wantPrefixCIS:          "pass",
+			wantCanRunMenu:         "6 · 7",
+			wantRunnable:           2,
 			wantLogParserReadiness: "PASS",
 		},
 		{
@@ -52,11 +52,11 @@ func TestBuildReadinessReport(t *testing.T) {
 				LogLinePrefix:    "minimal",
 				Commands:         defaultLogParserCommands,
 			},
-			wantConn:       "off",
-			wantCISLMA:     "fail",
-			wantPrefixCIS:  "fail",
-			wantCanRunMenu: "10",
-			wantRunnable:   1,
+			wantConn:               "off",
+			wantCISLMA:             "fail",
+			wantPrefixCIS:          "fail",
+			wantCanRunMenu:         "10",
+			wantRunnable:           1,
 			wantLogParserReadiness: "PASS",
 		},
 		{
@@ -66,10 +66,10 @@ func TestBuildReadinessReport(t *testing.T) {
 				LogLinePrefix:    "no %u/%a/%h",
 				Commands:         []string{cons.LogParserCMD_UniqueIPs, cons.LogParserCMD_InactiveUser},
 			},
-			wantConn:       "on",
-			wantCISLMA:     "partial",
-			wantCanRunMenu: "6 · 7",
-			wantRunnable:   2,
+			wantConn:               "on",
+			wantCISLMA:             "partial",
+			wantCanRunMenu:         "6 · 7",
+			wantRunnable:           2,
 			wantLogParserReadiness: "PASS",
 		},
 	}
@@ -102,9 +102,9 @@ func TestBuildReadinessReport(t *testing.T) {
 
 func TestEvaluateLogParserReadiness(t *testing.T) {
 	tests := []struct {
-		name           string
-		runnableCount  int
-		wantReadiness  string
+		name          string
+		runnableCount int
+		wantReadiness string
 	}{
 		{name: "no runnable commands", runnableCount: 0, wantReadiness: "FAIL"},
 		{name: "one runnable command", runnableCount: 1, wantReadiness: "PASS"},

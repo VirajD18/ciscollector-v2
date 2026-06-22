@@ -88,12 +88,12 @@ func TestNormalizeSSLStatus(t *testing.T) {
 
 func TestSslRows(t *testing.T) {
 	tests := []struct {
-		name      string
-		cis       []model.Result
-		hba       []model.HBAScannerResult
-		ssl       *model.SSLScanResult
-		wantKeys  []string
-		minRows   int
+		name     string
+		cis      []model.Result
+		hba      []model.HBAScannerResult
+		ssl      *model.SSLScanResult
+		wantKeys []string
+		minRows  int
 	}{
 		{
 			name: "cis ssl controls allowlist",

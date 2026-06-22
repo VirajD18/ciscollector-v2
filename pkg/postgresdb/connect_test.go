@@ -55,9 +55,9 @@ func TestPostgresValidate(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:          "comma separated dbnames",
-			config:        &Postgres{Host: "localhost", Port: "5432", User: "postgres", Password: "secret", DBName: "hej, hej1"},
-			wantErr:       false,
+			name:    "comma separated dbnames",
+			config:  &Postgres{Host: "localhost", Port: "5432", User: "postgres", Password: "secret", DBName: "hej, hej1"},
+			wantErr: false,
 		},
 		{
 			name:          "nil_config",

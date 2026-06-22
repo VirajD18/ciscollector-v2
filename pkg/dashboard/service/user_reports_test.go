@@ -73,10 +73,10 @@ func TestUserReportsFleet(t *testing.T) {
 		wantCommonMsg     bool
 	}{
 		{
-			name:              "no data",
-			report:            map[string]interface{}{},
-			wantInactiveMsg:   true,
-			wantCommonMsg:     true,
+			name:            "no data",
+			report:          map[string]interface{}{},
+			wantInactiveMsg: true,
+			wantCommonMsg:   true,
 		},
 		{
 			name:              "inactive users from log parser",

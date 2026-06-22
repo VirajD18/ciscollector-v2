@@ -485,15 +485,6 @@ func (c *cronHelper) reconcileSchedules() error {
 	return nil
 }
 
-func cronTickPostgres(commands []config.Command) *postgresdb.Postgres {
-	for _, cmd := range commands {
-		if len(cmd.Postgres) > 0 {
-			return cmd.Postgres[0]
-		}
-	}
-	return nil
-}
-
 func (c *cronHelper) Run(cancel context.CancelFunc) {
 	fmt.Println("starting crons")
 	c.mu.Lock()
