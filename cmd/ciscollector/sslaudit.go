@@ -11,13 +11,18 @@ import (
 
 type sslAuditor struct {
 	postgresConfig   *postgresdb.Postgres
+	fileData         map[string]interface{}
 	htmlReportHelper *htmlreport.HtmlReportHelper
+	outputType       string
 }
 
-func newSslAuditor(postgresConfig *postgresdb.Postgres, htmlReportHelper *htmlreport.HtmlReportHelper) *sslAuditor {
+func newSslAuditor(postgresConfig *postgresdb.Postgres, fileData map[string]interface{},
+	htmlReportHelper *htmlreport.HtmlReportHelper, outputType string) *sslAuditor {
 	return &sslAuditor{
 		postgresConfig:   postgresConfig,
+		fileData:         fileData,
 		htmlReportHelper: htmlReportHelper,
+		outputType:       outputType,
 	}
 }
 
@@ -38,6 +43,10 @@ func (h *sslAuditor) run(ctx context.Context) error {
 	}
 
 	h.htmlReportHelper.RegisterSSLReport(result)
+
+	if h.outputType == "json" && h.fileData != nil {
+		h.fileData["SSL Report"] = result
+	}
 
 	postgres.PrintSSLAuditSummary(result)
 

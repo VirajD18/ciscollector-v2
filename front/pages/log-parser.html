@@ -1,0 +1,32 @@
+<section id="page-log-parser" class="page">
+          <h1>Log parser</h1>
+          <p class="subtitle">Results from <code>scan_results.report_json</code> → <code>Log Parser Summary</code> · commands run via <code>[collector.logparser]</code> schedule or <code>scan_commands</code></p>
+          <p class="subtitle" id="log-parser-scan-meta" style="margin-top:-16px;"></p>
+
+          <div class="panel" style="padding:16px 20px;margin-bottom:20px;display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;">
+            <div class="form-group" style="margin:0;">
+              <label for="log-parser-host-select">Host (agent)</label>
+              <select id="log-parser-host-select">
+                <option value="">Loading hosts…</option>
+              </select>
+            </div>
+            <span class="link" id="log-parser-host-audit-link" data-goto="host-detail">Open full host audit →</span>
+          </div>
+
+          <div class="stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px;">
+            <div class="stat-card"><div class="stat-label">Commands</div><div class="stat-value" id="log-parser-stat-total">—</div></div>
+            <div class="stat-card"><div class="stat-label">Clean</div><div class="stat-value success" id="log-parser-stat-pass">—</div></div>
+            <div class="stat-card"><div class="stat-label">Findings</div><div class="stat-value" style="color:var(--warning,#e6a700)" id="log-parser-stat-warn">—</div></div>
+            <div class="stat-card"><div class="stat-label">Failed Parse</div><div class="stat-value danger" id="log-parser-stat-fail">—</div></div>
+          </div>
+
+          <div class="callout" style="margin-bottom:16px;" id="log-parser-callout">
+            Supported commands: <code>unique_ip</code>, <code>unused_lines</code>, <code>password_leak_scanner</code>.
+            Inactive users are on the <span class="link" data-goto="inactive-users-report">Inactive users report</span> page.
+          </div>
+
+          <div id="log-parser-command-list">
+            <p style="color:var(--muted);padding:16px;">Loading…</p>
+          </div>
+          <div class="table-pagination" id="log-parser-command-pagination" hidden></div>
+        </section>

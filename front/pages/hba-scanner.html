@@ -1,0 +1,38 @@
+<section id="page-hba-scanner" class="page">
+          <h1>HBA Scanner</h1>
+          <p class="subtitle">CLI Menu <strong>3</strong> · Live from SQLite <code>report_json</code> → <code>HBA Report</code></p>
+          <p class="subtitle hba-scan-meta" id="hba-scan-meta"></p>
+
+          <div class="pii-host-toolbar scanner-target-toolbar" id="hba-target-toolbar">
+            <div class="pii-target-field">
+              <label for="hba-instance-select">PostgreSQL Instance</label>
+              <select id="hba-instance-select" class="pii-target-select" aria-label="Select instance">
+                <option value="">Loading…</option>
+              </select>
+            </div>
+            <div class="pii-target-field">
+              <label for="hba-database-select">Database</label>
+              <select id="hba-database-select" class="pii-target-select" aria-label="Select database" disabled>
+                <option value="">Select instance first</option>
+              </select>
+            </div>
+            <div class="hba-audit-link-field">
+              <span class="hba-audit-link-spacer" aria-hidden="true">Link</span>
+              <span class="link" id="hba-host-audit-link" data-goto="host-detail">Open Full Host Audit →</span>
+            </div>
+          </div>
+
+          <div class="stats hba-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px;">
+            <div class="stat-card hba-stat-card"><div class="stat-label">Checks</div><div class="stat-value" id="hba-stat-total">—</div></div>
+            <div class="stat-card hba-stat-card"><div class="stat-label">Pass</div><div class="stat-value success" id="hba-stat-pass">—</div></div>
+            <div class="stat-card hba-stat-card"><div class="stat-label">Fail</div><div class="stat-value danger" id="hba-stat-fail">—</div></div>
+          </div>
+
+          <div class="callout hba-callout" id="hba-callout">
+            <strong id="hba-callout-host">—</strong> — Matches CLI HBA Scanner table. Line-level pg_hba detail is in the full HTML report (HBA Scanner Report tab).
+          </div>
+
+          <div class="hba-check-list" id="hba-check-list">
+            <p style="color:var(--muted);padding:16px;">Loading…</p>
+          </div>
+        </section>

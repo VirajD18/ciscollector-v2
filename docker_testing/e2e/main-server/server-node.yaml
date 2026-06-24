@@ -1,0 +1,12 @@
+id: e2e-main-server-id
+cluster_id: e2e-cluster-id
+cluster_name: e2e-test-cluster
+url: http://localhost:8081
+token: e2e-test-collector-token-do-not-use-in-prod
+hostname: main-server
+ip: 127.0.0.1
+environment: dev
+role: postgres
+# Optional main-server storage (defaults to sqlite when omitted):
+# db_driver: postgres
+# postgres_url: postgres://kshield:kshield@main-server-db:5432/kshield?sslmode=disable

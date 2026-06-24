@@ -71,6 +71,9 @@ func Run(ctx context.Context, db *sql.DB) []model.UserlistResult {
 	for _, r := range runner {
 		out = append(out, *r.Process(db, ctx))
 	}
+	for _, r := range top25Runner {
+		out = append(out, *r.Process(db, ctx))
+	}
 
 	return out
 }

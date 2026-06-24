@@ -1,0 +1,13 @@
+{
+  "runs": [
+    {
+      "id": 1,
+      "trigger": "cron",
+      "started_at": "2026-06-04T11:30:00.000Z",
+      "finished_at": "2026-06-04T11:32:00.000Z",
+      "features": ["all"],
+      "success": true,
+      "error": ""
+    }
+  ]
+}

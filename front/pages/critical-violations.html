@@ -1,0 +1,108 @@
+<section id="page-critical-violations" class="page">
+          <p class="critical-violations-back" id="critical-violations-back-hosts"><span class="link" data-goto="hosts" id="critical-violations-back-hosts-link">← Back To Host List</span></p>
+          <p class="critical-violations-back" id="critical-violations-back-summary" hidden><span class="link" data-goto="critical-violations" data-reset-crit-filters="1">← Back To Violations</span></p>
+          <header class="critical-violations-head">
+            <h1 id="critical-violations-page-title">Critical Violations</h1>
+            <p class="subtitle" id="critical-violations-page-subtitle">One row per violation · click a row to see affected servers · filter lists all 25 canonical checks</p>
+          </header>
+          <div class="critical-filters critical-violations-filters" id="critical-violations-filters-bar">
+            <div class="form-group critical-filter-dropdown" id="crit-viol-filter-violation-group">
+              <label for="crit-viol-filter-violation">Violation</label>
+              <select id="crit-viol-filter-violation">
+                <option value="">All Violations</option>
+              </select>
+            </div>
+            <div class="form-group critical-filter-dropdown">
+              <label for="crit-viol-filter-server">Server / Instance</label>
+              <select id="crit-viol-filter-server">
+                <option value="">All Servers</option>
+              </select>
+            </div>
+            <div class="form-group critical-filter-dropdown">
+              <label for="crit-viol-filter-source">Source</label>
+              <select id="crit-viol-filter-source">
+                <option value="">All Sources</option>
+              </select>
+            </div>
+            <div class="form-group critical-filter-dropdown" id="crit-viol-filter-type-group">
+              <label for="crit-viol-filter-type">Violation Type</label>
+              <select id="crit-viol-filter-type">
+                <option value="">All Types</option>
+              </select>
+            </div>
+            <div class="form-group critical-filter-severity-field">
+              <label for="crit-viol-filter-severity">Severity</label>
+              <select id="crit-viol-filter-severity">
+                <option value="">All Severities</option>
+              </select>
+            </div>
+            <div class="form-group critical-filters-date-field">
+              <span class="critical-filters-date-label" id="crit-viol-filter-dates-label">Date Range</span>
+              <div class="critical-date-range-box">
+                <div class="critical-date-input-wrap">
+                  <span class="critical-date-input-label">From</span>
+                  <input type="date" id="crit-viol-filter-date-from" lang="en-GB" aria-label="From date" placeholder="dd-mm-yyyy" />
+                </div>
+                <span class="critical-date-sep" aria-hidden="true">–</span>
+                <div class="critical-date-input-wrap">
+                  <span class="critical-date-input-label">To</span>
+                  <input type="date" id="crit-viol-filter-date-to" lang="en-GB" aria-label="To date" placeholder="dd-mm-yyyy" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group critical-filters-apply-field">
+              <span class="critical-filters-date-label critical-filters-apply-spacer" aria-hidden="true">&nbsp;</span>
+              <button type="button" class="btn btn-primary critical-date-range-apply" id="crit-viol-filter-apply">Apply Filters</button>
+            </div>
+          </div>
+          <div class="panel critical-table-wrap critical-violations-table-wrap" id="critical-violations-summary-panel">
+            <table>
+              <colgroup>
+                <col class="col-check-num" />
+                <col class="col-violation" />
+                <col class="col-affected" />
+                <col class="col-type" />
+                <col class="col-severity" />
+                <col class="col-source" />
+                <col class="col-detected" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="col-check-num">Check #</th>
+                  <th>Violation</th>
+                  <th class="col-affected">Affected Servers</th>
+                  <th>Violation Type</th>
+                  <th>Severity</th>
+                  <th>Source</th>
+                  <th>Latest Detected</th>
+                </tr>
+              </thead>
+              <tbody id="critical-violations-tbody"></tbody>
+            </table>
+          </div>
+          <div class="panel critical-table-wrap critical-violations-table-wrap" id="critical-violations-detail-panel" hidden>
+            <table>
+              <colgroup>
+                <col class="col-check-num" />
+                <col class="col-server" />
+                <col class="col-details" />
+                <col class="col-severity" />
+                <col class="col-source" />
+                <col class="col-detected" />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th class="col-check-num">Check #</th>
+                  <th class="col-server">Server Name</th>
+                  <th class="col-details">Details</th>
+                  <th>Severity</th>
+                  <th>Source</th>
+                  <th>Detected At</th>
+                </tr>
+              </thead>
+              <tbody id="critical-violations-detail-tbody"></tbody>
+            </table>
+          </div>
+          <div class="table-pagination" id="critical-violations-pagination" hidden></div>
+          <p class="critical-violations-count" id="critical-violations-result-count"></p>
+        </section>

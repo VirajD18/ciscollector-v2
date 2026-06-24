@@ -1,0 +1,851 @@
+/* KloudDB Shield HTML report — matches klouddbshield_allchecks reference (light theme) */
+
+
+
+#page-html-report {
+
+  background: #f0f0f0;
+
+  padding: 24px;
+
+  min-height: 100%;
+
+}
+
+
+
+#page-html-report > h1,
+
+#page-html-report > .subtitle {
+
+  max-width: 1400px;
+
+  margin-left: auto;
+
+  margin-right: auto;
+
+}
+
+
+
+#html-report-root,
+
+#host-mod-full-report {
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+}
+
+
+
+.kshield-html-report {
+
+  background: #f7f7f7;
+
+  color: #333;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+
+  border: 1px solid #e2e8f0;
+
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  font-size: 14px;
+
+  line-height: 1.45;
+
+  color-scheme: light;
+
+}
+
+
+
+.kshield-html-report * {
+
+  box-sizing: border-box;
+
+}
+
+
+
+.kshield-html-report header {
+
+  background: linear-gradient(145deg, #1e293b 0%, #334155 55%, #3d4f6f 100%);
+
+  color: #fff;
+
+  padding: 28px 32px 32px;
+
+  position: relative;
+
+}
+
+
+
+.kshield-html-report header::after {
+
+  content: '';
+
+  position: absolute;
+
+  left: 0;
+
+  right: 0;
+
+  bottom: 0;
+
+  height: 1px;
+
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+
+}
+
+
+
+.kshield-html-report .kshield-header-inner {
+
+  margin: 0;
+
+  padding: 24px 28px;
+
+  background: #fff;
+
+  border-radius: 12px;
+
+  color: #333;
+
+  box-shadow:
+
+    0 8px 32px rgba(15, 23, 42, 0.18),
+
+    0 2px 8px rgba(15, 23, 42, 0.08);
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+
+}
+
+
+
+.kshield-html-report .kshield-report-title {
+
+  margin: 0 0 12px;
+
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: #333;
+
+}
+
+.kshield-html-report .kshield-host-identity {
+  margin-top: 16px;
+  padding: 18px 20px;
+  border: 1px solid #dbeafe;
+  border-left: 4px solid #56a4d7;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+  box-shadow: 0 1px 3px rgba(86, 164, 215, 0.1);
+}
+
+.kshield-html-report .kshield-host-identity-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #56a4d7;
+  margin-bottom: 6px;
+}
+
+.kshield-html-report .kshield-host-identity-name {
+  margin: 0 0 8px;
+  font-size: 28px;
+  font-weight: 800;
+  color: #222;
+  word-break: break-word;
+}
+
+.kshield-html-report .kshield-host-identity-note {
+  margin: 0 0 14px;
+  font-size: 13px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.kshield-html-report .kshield-host-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px 20px;
+  margin: 0;
+}
+
+.kshield-html-report .kshield-host-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.kshield-html-report .kshield-host-meta dt {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #888;
+}
+
+.kshield-html-report .kshield-host-meta dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  word-break: break-word;
+}
+
+
+
+.kshield-html-report .kshield-report-meta {
+
+  margin: 0;
+
+  font-size: 13px;
+
+  color: #555;
+
+}
+
+
+
+.kshield-html-report .kshield-report-toolbar {
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  padding: 12px 16px 0;
+
+  background: #ececec;
+
+  border-bottom: 1px solid #dee2e6;
+
+}
+
+
+
+.kshield-html-report .nav-link {
+
+  padding: 10px 20px;
+
+  border: none;
+
+  background: #f0f0f0;
+
+  color: #333;
+
+  border-radius: 5px 5px 0 0;
+
+  cursor: pointer;
+
+  font-size: 13px;
+
+  font-family: inherit;
+
+  transition: background-color 0.3s;
+
+  margin-right: 5px;
+
+}
+
+
+
+.kshield-html-report .nav-link.active {
+
+  background: #fff;
+
+  font-weight: 600;
+
+}
+
+
+
+.kshield-html-report .tab-content {
+
+  display: none;
+
+  padding: 20px;
+
+  background: #fff;
+
+  border-left: 1px solid #dee2e6;
+
+  border-right: 1px solid #dee2e6;
+
+  border-bottom: 1px solid #dee2e6;
+
+  border-radius: 0 0 5px 5px;
+
+}
+
+
+
+.kshield-html-report .tab-content.active-tab {
+
+  display: block;
+
+}
+
+
+
+.kshield-html-report #summaryStats {
+
+  margin: 20px 0;
+
+  padding: 20px;
+
+  border: 1px solid #ddd;
+
+  background: #fafafa;
+
+  border-radius: 6px;
+
+}
+
+
+
+.kshield-html-report #summaryStats h3 {
+
+  margin: 0 0 16px;
+
+  color: #333;
+
+}
+
+
+
+.kshield-html-report .progress-bar {
+
+  margin-bottom: 10px;
+
+  background: #fff;
+
+}
+
+
+
+.kshield-html-report .progress-label {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  font-weight: 700;
+
+  margin-bottom: 5px;
+
+  color: #333;
+
+  width: 100%;
+
+  padding: 5px 10px;
+
+}
+
+
+
+.kshield-html-report .progress {
+
+  width: 100%;
+
+  border: 1px solid #ccc;
+
+  height: 20px;
+
+  background: #fff;
+
+}
+
+
+
+.kshield-html-report .progress-filled {
+
+  height: 100%;
+
+  transition: width 0.3s ease-in-out;
+
+}
+
+
+
+.kshield-html-report .overall-progress-bar {
+
+  margin-top: 16px;
+
+  margin-bottom: 20px;
+
+  border-top: 1px solid #ccc;
+
+  padding-top: 20px;
+
+  background: #f7f7f7;
+
+}
+
+
+
+.kshield-html-report .table-container {
+
+  margin-top: 16px;
+
+  margin-bottom: 20px;
+
+}
+
+
+
+.kshield-html-report .maintable {
+
+  width: 100%;
+
+  border-collapse: collapse;
+
+  margin: 30px 0;
+
+  padding: 20px;
+
+  background: #fff;
+
+  border: 1px solid #ddd;
+
+  border-radius: 5px;
+
+  overflow: hidden;
+
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  table-layout: fixed;
+
+}
+
+
+
+.kshield-html-report .table th,
+
+.kshield-html-report .table td,
+
+.kshield-html-report .maintable th,
+
+.kshield-html-report .maintable td {
+
+  padding: 12px;
+
+  text-align: left;
+
+  border-bottom: 1px solid #ddd;
+
+  vertical-align: middle;
+
+  word-break: break-word;
+
+  color: #333;
+
+}
+
+
+
+.kshield-html-report .maintable th {
+
+  background: #fff;
+
+  font-weight: 600;
+
+}
+
+
+
+.kshield-html-report .icon_column {
+
+  width: 120px;
+
+  text-align: center !important;
+
+}
+
+
+
+.kshield-html-report .critical_row {
+
+  background: #fee !important;
+
+}
+
+
+
+.kshield-html-report .toggleRow {
+
+  cursor: default;
+
+}
+
+
+
+.kshield-html-report .childTableRow {
+
+  display: none;
+
+  background: #f8faff;
+
+}
+
+
+
+.kshield-html-report .childTableRow.open {
+
+  display: table-row;
+
+}
+
+
+
+.kshield-html-report .scrollable-container {
+
+  overflow-x: auto;
+
+  width: 100%;
+
+}
+
+
+
+.kshield-html-report #innerTable {
+
+  width: 100%;
+
+  border: 2px solid #555;
+
+  margin: 8px 0;
+
+  table-layout: fixed;
+
+}
+
+
+
+.kshield-html-report #innerTable th {
+
+  width: 180px;
+
+  background: #f0f4f8;
+
+  font-weight: 600;
+
+}
+
+
+
+.kshield-html-report .infoIcon {
+
+  cursor: pointer;
+
+  fill: #56a4d7;
+
+}
+
+
+
+.kshield-html-report .toggleAll {
+
+  border: 2px solid #56a4d7;
+
+  color: #56a4d7;
+
+  background: #fff;
+
+  padding: 10px 20px;
+
+  font-size: 1em;
+
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+}
+
+
+
+.kshield-html-report .toggleAll:hover {
+
+  background: #56a4d7;
+
+  color: #fff;
+
+}
+
+
+
+.kshield-html-report .table-toolbar {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  margin-bottom: 10px;
+
+}
+
+
+
+.kshield-html-report .legend-table {
+
+  border: none;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 12px;
+
+}
+
+
+
+.kshield-html-report .legend-table td {
+
+  border: none;
+
+  padding: 0 6px;
+
+}
+
+
+
+.kshield-html-report .all-title {
+
+  padding: 15px;
+
+  color: #333;
+
+  text-align: center;
+
+  margin: 28px 0 16px;
+
+  border-radius: 10px;
+
+  border: 1px solid #bbb;
+
+  border-bottom: 3px solid #bbb;
+
+  background: #f0f4f8;
+
+  font-size: 16px;
+
+  font-weight: 700;
+
+}
+
+
+
+.kshield-html-report .status-pass { color: #20d908; font-weight: 600; }
+
+.kshield-html-report .status-fail { color: #e85d75; font-weight: 600; }
+
+.kshield-html-report .status-manual { color: #FFD700; font-weight: 600; }
+
+
+
+.kshield-html-report .hba-lines-list {
+
+  list-style: none;
+
+  padding: 0;
+
+  margin: 0;
+
+}
+
+
+
+.kshield-html-report .hba-line {
+
+  margin-bottom: 10px;
+
+  padding: 10px;
+
+  border: 1px solid #ddd;
+
+  border-radius: 5px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background: #fff;
+
+  transition: background-color 0.3s;
+
+}
+
+
+
+.kshield-html-report .hba-line:hover {
+
+  background: #f0f4f8;
+
+}
+
+
+
+.kshield-html-report .hba-line.fail {
+
+  border-left: 4px solid #ea4335;
+
+}
+
+
+
+.kshield-html-report .hba-line.pass {
+
+  border-left: 4px solid #34a853;
+
+}
+
+
+
+.kshield-html-report .queryResult .table-striped thead tr {
+
+  background: #404eb3;
+
+  color: #fff;
+
+}
+
+
+
+.kshield-html-report .queryResult .table-striped tbody tr:nth-of-type(odd) {
+
+  background: transparent;
+
+}
+
+
+
+.kshield-html-report .queryResult .table-striped tbody tr:nth-of-type(even) {
+
+  background: #e3e5f4;
+
+}
+
+
+
+.kshield-html-report footer {
+
+  margin-top: 20px;
+
+  padding: 20px;
+
+  background: #333;
+
+  color: #fff;
+
+  text-align: center;
+
+  font-size: 0.8em;
+
+}
+
+
+
+.kshield-html-report .kshield-loading {
+
+  padding: 32px;
+
+  text-align: center;
+
+  color: #666;
+
+}
+
+
+
+.kshield-html-report h3 {
+
+  color: #333;
+
+  margin: 16px 0 12px;
+
+}
+
+
+
+#host-mod-full-report .kshield-html-report {
+
+  margin-top: 8px;
+
+}
+
+
+
+#host-mod-full-report .report-actions {
+
+  margin-bottom: 16px;
+
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 12px;
+
+  align-items: center;
+
+}
+
+.kshield-html-report .manualCheck h6 {
+  margin: 0 0 10px;
+  color: #333;
+  font-weight: 600;
+}
+
+.kshield-html-report .manualCheck ul {
+  margin: 0 0 12px;
+  padding-left: 20px;
+}
+
+.kshield-html-report #manualCheckTable {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.kshield-html-report #manualCheckTable th,
+.kshield-html-report #manualCheckTable td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  vertical-align: top;
+  word-break: break-word;
+}
+
+.kshield-html-report #manualCheckTable th {
+  background: #f0f4f8;
+  font-weight: 600;
+}
+
+

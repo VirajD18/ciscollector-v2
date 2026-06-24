@@ -1,0 +1,9 @@
+{
+  "rows": [
+    ["prod-db-01", "10.0.1.12", "82%", "Passing", "-", "Online", "2h ago"],
+    ["prod-db-02", "10.0.1.13", "61%", "Failing", "5", "Online", "2h ago"],
+    ["staging-db", "10.0.2.4", "94%", "Passing", "-", "Online", "3h ago"],
+    ["analytics-01", "10.0.3.8", "38%", "Failing", "12", "Online", "1h ago"],
+    ["legacy-pg", "10.0.4.2", "71%", "Advisory", "2", "Online", "4h ago"]
+  ]
+}

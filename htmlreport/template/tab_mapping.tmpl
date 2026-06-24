@@ -1,5 +1,7 @@
 {{ define "tabMapping" }}
-    {{ if eq .Title "Postgres Security Report" }}
+    {{ if eq .Title "Critical Violations" }}
+        {{ template "criticalViolationsTab" .Body }}
+    {{ else if eq .Title "Postgres Security Report" }}
         {{ template "postgresTab" .Body }}
     {{ else if eq .Title "Mysql" }}
         {{ template "postgresTab" .Body }}

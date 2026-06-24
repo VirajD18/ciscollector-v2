@@ -1,0 +1,26 @@
+<section id="page-log-readiness" class="page">
+          <h1>Log Readiness</h1>
+          <p class="subtitle">GUC settings required for log parser scans</p>
+
+          <article class="report-block" style="margin-bottom:24px;">
+            <div class="report-block-header">
+              <h2>GUC Readiness</h2>
+              <p>Per host · <span id="log-guc-hint">—</span></p>
+            </div>
+            <div class="guc-host-toolbar" id="log-guc-toolbar" style="margin-bottom:12px;">
+              <label class="guc-host-search">
+                <span class="guc-host-search-label">Search</span>
+                <input type="search" id="log-guc-search" placeholder="Filter by hostname…" autocomplete="off" />
+              </label>
+            </div>
+            <div class="report-block-body fleet-detail-table-wrap" style="border:none;">
+              <table>
+                <thead><tr><th>Hostname</th><th>Log_connections</th><th>Log_line_prefix (CIS)</th><th>Logparser Readiness</th><th>Action</th></tr></thead>
+                <tbody id="log-guc-tbody">
+                  <tr><td colspan="5" style="color:var(--muted);">Loading GUC readiness…</td></tr>
+                </tbody>
+              </table>
+              <div class="table-pagination" id="log-guc-pagination" hidden></div>
+            </div>
+          </article>
+        </section>

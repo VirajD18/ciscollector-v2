@@ -1,0 +1,94 @@
+<section id="page-pii-scanner" class="page">
+          <h1>Postgres PII Report</h1>
+          <p class="subtitle">PII results from <code>scan_results.pii_report_json</code> · Scans run on the collector via <code>[piiscanner]</code> in <code>kshieldconfig.toml</code></p>
+
+          <div class="pii-host-toolbar" id="pii-target-toolbar">
+            <div class="pii-target-field">
+              <label for="pii-instance-select">PostgreSQL Instance</label>
+              <select id="pii-instance-select" class="pii-target-select" aria-label="Select instance">
+                <option value="">Loading…</option>
+              </select>
+            </div>
+            <div class="pii-target-field">
+              <label for="pii-database-select">Database</label>
+              <select id="pii-database-select" class="pii-target-select" aria-label="Select database" disabled>
+                <option value="">Select instance first</option>
+              </select>
+            </div>
+          </div>
+
+          <p class="callout pii-scan-callout" id="pii-scan-target">Select instance and database to view stored PII results.</p>
+
+          <div id="pii-results-panel">
+            <div class="stats pii-results-summary" id="pii-results-summary"></div>
+
+            <article class="report-block pii-report-section" id="pii-data-scan-block">
+              <div class="report-block-header pii-report-section-header">
+                <div>
+                  <h2>Data Scan Report</h2>
+                  <p>High-confidence PII detected in column values</p>
+                </div>
+                <span class="pii-section-badge pii-section-badge--data">Value Scan</span>
+              </div>
+              <div class="report-block-body pii-report-section-body">
+                <div class="pii-table-wrap">
+                  <table class="pii-report-table">
+                    <thead>
+                      <tr>
+                        <th>Table</th>
+                        <th>Column</th>
+                        <th>Label</th>
+                        <th>Confidence</th>
+                        <th>Detector</th>
+                        <th>Matched</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pii-data-tbody"></tbody>
+                  </table>
+                </div>
+                <div class="table-pagination" id="pii-data-pagination" hidden></div>
+                <div id="pii-no-data" style="display:none;"></div>
+              </div>
+            </article>
+
+            <article class="report-block pii-report-section" id="pii-meta-scan-block" style="display:none;">
+              <div class="report-block-header pii-report-section-header">
+                <div>
+                  <h2>Meta Scan Report</h2>
+                  <p>PII inferred from column names (metascan / deepscan)</p>
+                </div>
+                <span class="pii-section-badge pii-section-badge--meta">Meta Scan</span>
+              </div>
+              <div class="report-block-body pii-report-section-body">
+                <div class="pii-table-wrap">
+                  <table class="pii-report-table">
+                    <thead>
+                      <tr>
+                        <th>Table</th>
+                        <th>Column</th>
+                        <th>Label</th>
+                        <th>Confidence</th>
+                      </tr>
+                    </thead>
+                    <tbody id="pii-meta-tbody"></tbody>
+                  </table>
+                </div>
+                <div class="table-pagination" id="pii-meta-pagination" hidden></div>
+              </div>
+            </article>
+
+            <article class="report-block pii-report-section pii-low-conf-section" id="pii-low-conf-block" style="display:none;">
+              <div class="report-block-header pii-report-section-header">
+                <div>
+                  <h2>Low-Confidence Tables</h2>
+                  <p>PII-like signals detected but below the high-confidence bar — worth a manual review</p>
+                </div>
+                <span class="pii-section-badge pii-section-badge--low" id="pii-low-conf-badge">Review</span>
+              </div>
+              <div class="report-block-body pii-report-section-body">
+                <div id="pii-low-conf-content"></div>
+                <div class="table-pagination" id="pii-low-conf-pagination" hidden></div>
+              </div>
+            </article>
+          </div>
+        </section>

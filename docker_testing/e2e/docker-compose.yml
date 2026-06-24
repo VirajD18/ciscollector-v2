@@ -1,0 +1,83 @@
+services:
+  # Central main-server persistence (profile: postgres-storage). Collectors keep their own Postgres.
+  main-server-db:
+    profiles: ["postgres-storage"]
+    image: postgres:17
+    container_name: kshield-main-server-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${MAIN_SERVER_PG_USER:-kshield}
+      POSTGRES_PASSWORD: ${MAIN_SERVER_PG_PASSWORD:-kshield}
+      POSTGRES_DB: ${MAIN_SERVER_PG_DB:-kshield}
+    volumes:
+      - main-server-pg-data:/var/lib/postgresql/data
+    networks:
+      kshield-net:
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${MAIN_SERVER_PG_USER:-kshield} -d ${MAIN_SERVER_PG_DB:-kshield}"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  main-server:
+    build:
+      context: ../..
+      dockerfile: docker_testing/e2e/main-server/Dockerfile
+    container_name: kshield-main-server
+    restart: unless-stopped
+    ports:
+      - "8081:8081"
+    volumes:
+      - main-server-data:/etc/klouddbshield
+    environment:
+      KSHIELD_DB_DRIVER: ${KSHIELD_DB_DRIVER:-sqlite}
+      DATABASE_URL: ${MAIN_SERVER_DATABASE_URL:-}
+      MAIN_SERVER_DATABASE_URL: ${MAIN_SERVER_DATABASE_URL:-}
+    depends_on:
+      main-server-db:
+        condition: service_healthy
+        required: false
+    networks:
+      kshield-net:
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/api/overview"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 15s
+
+  # Scale with COLLECTOR_COUNT: ./run.sh  (uses docker compose --scale collector=N)
+  # Each replica gets a unique container hostname → unique dashboard target_id.
+  collector:
+    build:
+      context: ../..
+      dockerfile: docker_testing/e2e/postgres-collector/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      main-server:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: shielduser
+      POSTGRES_PASSWORD: shieldpass
+      POSTGRES_DB: shielddb
+      MAIN_SERVER_URL: http://main-server:8081
+      COLLECTOR_TOKEN: ${COLLECTOR_TOKEN}
+      COLLECTOR_SCHEDULE: ${COLLECTOR_SCHEDULE}
+      SCAN_COMMANDS: ${SCAN_COMMANDS}
+      PII_RUN_OPTION: ${PII_RUN_OPTION}
+      PII_SCHEDULE: ${PII_SCHEDULE:-}
+      LOG_PARSER_SCHEDULE: ${LOG_PARSER_SCHEDULE:-}
+      LOG_PARSER_PREFIX: ${LOG_PARSER_PREFIX:-%t }
+      LOG_PARSER_LOGFILE: ${LOG_PARSER_LOGFILE:-/var/lib/postgresql/data/log/*.log}
+      LOG_PARSER_HBAFILE: ${LOG_PARSER_HBAFILE:-/var/lib/postgresql/data/pg_hba.conf}
+    networks:
+      kshield-net:
+
+networks:
+  kshield-net:
+    driver: bridge
+
+volumes:
+  main-server-data:
+  main-server-pg-data:

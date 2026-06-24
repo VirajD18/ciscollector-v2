@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KloudDBShield Report</title>
+  <link rel="stylesheet" href="/styles/html-report.css" />
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+      background: linear-gradient(180deg, #e8edf3 0%, #f4f6f9 40%, #f0f0f0 100%);
+    }
+    #html-report-root {
+      max-width: none;
+      margin: 0;
+      min-height: 100vh;
+    }
+    #html-report-root .kshield-html-report {
+      min-height: 100vh;
+      border: none;
+      border-radius: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="html-report-root"></div>
+  <script type="module" src="/scripts/report-standalone.js"></script>
+</body>
+</html>

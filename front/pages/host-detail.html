@@ -1,0 +1,87 @@
+<section id="page-host-detail" class="page">
+          <div id="host-detail-banner" class="callout" style="display:none;margin-bottom:16px;"></div>
+          <h1 id="host-detail-title">Host</h1>
+          <p class="subtitle" id="host-detail-subtitle">Loading host report…</p>
+          <div class="host-db-toolbar" id="host-db-select-row" hidden>
+            <div class="host-db-toolbar-icon" aria-hidden="true">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="12" cy="5.5" rx="7" ry="2.5" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 5.5v13c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5v-13" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M5 12c0 1.38 3.13 2.5 7 2.5s7-1.12 7-2.5" stroke="currentColor" stroke-width="1.5"/>
+              </svg>
+            </div>
+            <div class="host-db-toolbar-content">
+              <p class="host-db-toolbar-label">Database on this instance</p>
+              <p class="host-db-toolbar-desc">Switch audit report — CIS, HBA, SSL, and PII are per database.</p>
+              <div class="host-db-picker" id="host-database-picker" role="tablist" aria-label="Select database"></div>
+            </div>
+          </div>
+
+          <div class="stats" id="host-detail-kpis" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px;">
+            <div class="stat-card"><div class="stat-label">CIS Score</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">Failed Controls</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">GUC Drift</div><div class="stat-value">-</div></div>
+            <div class="stat-card"><div class="stat-label">Audit Report</div><div class="stat-value" style="font-size:16px">-</div></div>
+          </div>
+
+          <nav class="host-toc" aria-label="Jump to report section">
+            <span class="host-toc-label">Jump to</span>
+            <a href="#block-critical-violations">Critical Violations</a>
+            <a href="#block-cis">CIS</a>
+            <a href="#block-data">Data &amp; Logs</a>
+            <a href="#section-full-report">HTML Export</a>
+          </nav>
+
+          <div class="host-report" id="host-report">
+
+          <article class="report-block" id="block-critical-violations">
+            <div class="report-block-header">
+              <h2>1. Critical Violations</h2>
+              <p>Priority hardening violations · separate from full CIS benchmark rollup</p>
+            </div>
+            <div class="report-block-body">
+              <div id="host-mod-critical-violations" class="report-section"></div>
+            </div>
+          </article>
+
+          <article class="report-block" id="block-cis">
+            <div class="report-block-header">
+              <h2>2. Security Posture (CIS)</h2>
+              <p>htmlreport tab: <strong>Postgres Security Report</strong> — postgres.tmpl</p>
+            </div>
+            <div class="report-block-body">
+          <div id="section-cis-audit" class="report-section">
+            <div id="host-mod-cis"></div>
+          </div>
+            </div>
+          </article>
+
+          <article class="report-block" id="block-data">
+            <div class="report-block-header">
+              <h2>3. Data &amp; Logs</h2>
+              <p>htmlreport: PII Scanner Report · Log Parser</p>
+            </div>
+            <div class="report-block-body">
+              <div class="data-logs-grid">
+                <section class="data-log-card" id="section-pii-scan">
+                  <div id="host-mod-pii"></div>
+                </section>
+                <section class="data-log-card" id="section-pg-log">
+                  <div id="host-mod-logparser"></div>
+                </section>
+              </div>
+            </div>
+          </article>
+
+          <article class="report-block" id="section-full-report">
+            <div class="report-block-header">
+              <h2>4. Full HTML Report</h2>
+              <p>Styled fullscreen export — same multi-tab structure as CLI <code>klouddbshield_report.html</code></p>
+            </div>
+            <div class="report-block-body">
+              <div id="host-mod-full-report"></div>
+            </div>
+          </article>
+
+          </div>
+        </section>

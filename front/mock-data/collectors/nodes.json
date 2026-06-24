@@ -1,0 +1,16 @@
+{
+  "nodes": [
+    {
+      "node_id": "demo-collector-node-1",
+      "hostname": "collector-node-1",
+      "ip": "127.0.0.1",
+      "status": "online",
+      "cron_running": false,
+      "scheduled_jobs": 1,
+      "last_seen_at": "2026-06-04T12:00:00.000Z",
+      "last_run_at": "2026-06-04T11:30:00.000Z",
+      "last_error": ""
+    }
+  ],
+  "updated_at": "2026-06-04T12:00:00.000Z"
+}

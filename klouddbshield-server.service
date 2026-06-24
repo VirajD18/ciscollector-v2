@@ -1,0 +1,17 @@
+[Unit]
+Description=KloudDBShield Main Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/main-server -addr :8081 -dbdir /etc/klouddbshield/db
+User=root
+Restart=always
+RestartSec=5
+KillSignal=SIGTERM
+TimeoutStopSec=30
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

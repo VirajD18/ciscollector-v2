@@ -1,0 +1,15 @@
+{
+  "ranges": {
+    "30d": {
+      "label": "Last 30 days",
+      "health": 78,
+      "grade": "B+",
+      "gradeColor": "var(--success)",
+      "critical": 14,
+      "cis": 65,
+      "servers": 120,
+      "onPrem": 80,
+      "cloud": 40
+    }
+  }
+}

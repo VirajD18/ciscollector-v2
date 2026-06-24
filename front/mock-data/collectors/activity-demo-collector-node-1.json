@@ -1,0 +1,16 @@
+{
+  "activity": [
+    {
+      "kind": "cron_tick",
+      "message": "cron tick finished",
+      "level": "info",
+      "created_at": "2026-06-04T11:32:00.000Z"
+    },
+    {
+      "kind": "cron_tick",
+      "message": "cron tick started: 25 17 * * *",
+      "level": "info",
+      "created_at": "2026-06-04T11:30:00.000Z"
+    }
+  ]
+}

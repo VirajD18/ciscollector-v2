@@ -5,17 +5,16 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/jedib0t/go-pretty/text"
 	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/model"
 	"github.com/klouddb/klouddbshield/pkg/config"
 	cons "github.com/klouddb/klouddbshield/pkg/const"
 	"github.com/klouddb/klouddbshield/pkg/logparser"
 	"github.com/klouddb/klouddbshield/pkg/parselog"
 	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 	"github.com/klouddb/klouddbshield/pkg/runner"
-	"github.com/klouddb/klouddbshield/pkg/utils"
 )
 
 type logParserRunner struct {
@@ -52,21 +51,22 @@ func (l *logParserRunner) run(ctx context.Context) error {
 			defer store.Close()
 		}
 	}
-	updatePgSettings(ctx, store, l.logParserCnf.PgSettings)
+	if store != nil {
+		if err := refreshPgSettingsForLogParser(ctx, store, l.logParserCnf.PgSettings); err != nil {
+			fmt.Println("Error while getting postgres settings: ", text.FgHiRed.Sprint(err))
+			os.Exit(1)
+		}
+	}
+	started := time.Now().UTC()
+	embedLogReadinessInFileData(
+		l.fileData,
+		l.logParserCnf.PgSettings.LogConnections,
+		l.logParserCnf.PgSettings.LogLinePrefix,
+		l.logParserCnf.Commands,
+		started,
+		started,
+	)
 	return runLogParserWithMultipleParser(ctx, l.isRunCmd, l.logParserCnf, store, l.htmlReportHelper, l.fileData, l.outputType)
-}
-
-func updatePgSettings(ctx context.Context, store *sql.DB, pgSettings *model.PgSettings) {
-	if store == nil {
-		return
-	}
-	ps, err := utils.GetPGSettings(ctx, store)
-	if err != nil {
-		fmt.Println("Error while getting postgres settings: ", text.FgHiRed.Sprint(err))
-		os.Exit(1)
-	}
-
-	pgSettings.LogConnections = ps.LogConnections
 }
 
 func runLogParserWithMultipleParser(ctx context.Context, runCmd bool, logParserCnf *config.LogParser,
@@ -105,7 +105,7 @@ func runLogParserWithMultipleParser(ctx context.Context, runCmd bool, logParserC
 		}
 	}
 
-	if runCmd {
+	if runCmd || outputType == "json" {
 		logparser.PrintSummary(ctx, allParser, logParserCnf, fastRunnerResp, fileData, outputType)
 	} else {
 		logparser.PrintFastRunnerReport(logParserCnf, fastRunnerResp)

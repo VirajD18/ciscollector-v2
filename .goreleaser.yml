@@ -1,8 +1,18 @@
+version: 2
+
+before:
+  hooks:
+    - rm -rf cmd/main-server/dist
+    - cp -R front cmd/main-server/dist
+
+project_name: klouddbshield
+
 builds:
-  - main: ./cmd/ciscollector
+  - id: ciscollector
+    main: ./cmd/ciscollector
     binary: ciscollector
     ldflags:
-      - -s -w -X 'github.com/klouddb/klouddbshield/pkg/config.Version={{.Version}}'
+      - -s -w -X 'github.com/klouddb/klouddbshield/pkg/config.Version={{ .Version }}'
     goos:
       - darwin
       - linux
@@ -11,38 +21,102 @@ builds:
       - arm64
     env:
       - CGO_ENABLED=0
-project_name: ciscollector
+
+  - id: kshield
+    main: ./cmd/kshield
+    binary: kshield
+    ldflags:
+      - -s -w -X 'github.com/klouddb/klouddbshield/pkg/config.Version={{ .Version }}'
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+  - id: main-server
+    main: ./cmd/main-server
+    binary: main-server
+    ldflags:
+      - -s -w -X 'github.com/klouddb/klouddbshield/pkg/config.Version={{ .Version }}'
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+archives:
+  - id: ciscollector-archive
+    ids:
+      - ciscollector
+    formats:
+      - tar.gz
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+  - id: main-server-archive
+    ids:
+      - main-server
+    formats:
+      - tar.gz
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    
+checksum:
+  name_template: checksums.txt
+
 release:
   prerelease: auto
 
-universal_binaries:
-  - replace: true
-
-checksum:
-  name_template: 'checksums.txt'
 nfpms:
-  -
+  - id: ciscollector-nfpm
+    builds:
+      - ciscollector
     file_name_template: "ciscollector_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     vendor: Klouddb
     package_name: ciscollector
     homepage: https://github.com/klouddb/collector
     maintainer: Klouddb <klouddb@gmail.com>
-    description: CIS Collecotr
+    description: CIS Collector
     license: BSD 3-Clause
     formats:
       - deb
       - rpm
     contents:
-      # Basic file that applies to all packagers
       - src: kshieldconfig_example.toml
         dst: /etc/klouddbshield/kshieldconfig.toml
         type: config
       - src: passwords/*
         dst: /etc/klouddbshield/passwords
         type: config
-      # Simple config file
       - src: systemd.service
         dst: /lib/systemd/system/ciscollector.service
       - src: python/*
         dst: /etc/klouddbshield/python
         type: config
+
+  - id: main-server-nfpm
+    builds:
+      - main-server
+      - kshield
+    file_name_template: "main-server_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    vendor: Klouddb
+    package_name: main-server
+    homepage: https://github.com/klouddb/klouddbshield
+    maintainer: Klouddb <klouddb@gmail.com>
+    description: KloudDBShield Main Server
+    license: BSD 3-Clause
+    formats:
+      - deb
+      - rpm
+    contents:
+      - src: klouddbshield-server.service
+        dst: /lib/systemd/system/klouddbshield-server.service
+      - src: packaging/certs/README.md
+        dst: /etc/klouddbshield/certs/README.md
+        type: config
+    scripts:
+      postinstall: packaging/postinst.sh

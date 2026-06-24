@@ -1,29 +1,54 @@
-# customTemplate="/path/to/template"
 
 # [postgres]
 # host = "localhost"
 # port = "5432"
 # user = "postgres"
 # password = "password123"
+# dbname = "mydb"
+# maxIdleConn = 10
+# maxOpenConn = 100
+
+
+# – optional parameters to enable SSL –
+
 # sslmode = "disable"
 # sslcert="path/to/cert"
 # sslkey="path/to/key"
 # sslrootcert="path/to/rootcert"
-# pingCheck = true
-# dbname = "mydb"
-# sslmode = "disable"
-# pingCheck = true
-# maxIdleConn = 10
-# maxOpenConn = 100
 
-# [mysql]
-# host="localhost"
-# port="3306"
-# user="root"
-# password="mysql111"
-# pingCheck = true
-# maxIdleConn = 2
-# maxOpenConn = 2
+# NOTE - Please refer to our user guide and demo videos for additional information about these configuration parameters https://klouddb.gitbook.io/klouddb_shield
+
+# [collector]
+# schedule = "0 12 * * *"
+# scan_commands = "all"  # CIS + HBA + SSL + password leak + log parser + PII (uses [piiscanner])
+
+
+# [collector.logparser]
+# NOTE - Please ensure that  log_connections=on and prefix at a minimum includes %m [%p]: [%l-1] db=%d,user=%u,app=%a,client=%h
+
+# prefix = "%m [%p]: [%l-1] db=%d,user=%u,app=%a,client=%h "
+# logfile = "/var/log/postgresql/*.log"
+# hbaconffile = "/etc/postgresql/pg_hba.conf"
+
+
+# [piiscanner]
+# run_option = "datascan"
+# database = "mydb"
+# schema = "public"
+# exclude_tables = ""
+# include_tables = ""
+
 
 # [app]
+# hostname = "postgreshost1"
 # debug = true
+
+
+
+# [mainserver]
+# enabled = true
+# url = "https://shield.example.com:8081"
+# token = "your-shared-secret"
+# push_interval = "30s"
+# offline_threshold_sec = 90
+# tls_ca_file = "/etc/klouddbshield/certs/ca.crt"
