@@ -29,15 +29,15 @@ type postgresRunner struct {
 
 // Notice the ", hostname string" added right before the closing parenthesis!
 func newPostgresRunnerFromConfig(postgresConfig *postgresdb.Postgres, fileData map[string]interface{},
-        postgresCheckSet utils.Set[string], htmlReportHelper *htmlreport.HtmlReportHelper, outputType string, hostname string) *postgresRunner {
-        return &postgresRunner{
-                postgresConfig:   postgresConfig,
-                fileData:         fileData,
-                postgresCheckSet: postgresCheckSet,
-                htmlReportHelper: htmlReportHelper,
-                outputType:       outputType,
-                hostname:         hostname,
-        }
+	postgresCheckSet utils.Set[string], htmlReportHelper *htmlreport.HtmlReportHelper, outputType string, hostname string) *postgresRunner {
+	return &postgresRunner{
+		postgresConfig:   postgresConfig,
+		fileData:         fileData,
+		postgresCheckSet: postgresCheckSet,
+		htmlReportHelper: htmlReportHelper,
+		outputType:       outputType,
+		hostname:         hostname,
+	}
 }
 
 func (p *postgresRunner) cronProcess(ctx context.Context) error {

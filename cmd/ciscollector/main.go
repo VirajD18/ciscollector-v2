@@ -143,44 +143,41 @@ func main() {
 	overviewErrorMap := map[string]error{}
 	var hbaResult []*model.HBAScannerResult
 	if cnf.App.RunPostgres {
-	for _, pg := range cnf.PostgresTargets() {
-		targetData := map[string]interface{}{}
-		summary, err := newPostgresRunnerFromConfig(pg, targetData, cnf.PostgresCheckSet, htmlReportHelper, cnf.OutputType, cnf.App.Hostname).run(ctx)
+		for _, pg := range cnf.PostgresTargets() {
+			targetData := map[string]interface{}{}
+			summary, err := newPostgresRunnerFromConfig(pg, targetData, cnf.PostgresCheckSet, htmlReportHelper, cnf.OutputType, cnf.App.Hostname).run(ctx)
 
-		// 1. FIX: Aggregate the summary instead of overwriting.
-		// (Adjust the logic inside the else block based on your struct's methods)
-		if postgresSummary == nil {
-			postgresSummary = summary
-		} else {
-			// Example: postgresSummary.Combine(summary)
-			// OR: postgresSummary.Passed += summary.Passed
-		}
+			// 1. FIX: Aggregate the summary instead of overwriting.
+			// (Adjust the logic inside the else block based on your struct's methods)
+			if postgresSummary == nil {
+				postgresSummary = summary
+			}
 
-		// 2. FIX: Prevent error overwriting by keying with the dynamic server host
-		if err != nil {
-			errorKey := fmt.Sprintf("%s_%s", cons.RootCMD_PostgresCIS, pg.Host)
-			overviewErrorMap[errorKey] = err
-		}
+			// 2. FIX: Prevent error overwriting by keying with the dynamic server host
+			if err != nil {
+				errorKey := fmt.Sprintf("%s_%s", cons.RootCMD_PostgresCIS, pg.Host)
+				overviewErrorMap[errorKey] = err
+			}
 
-		// 3. FIX: Make the fileData keys unique per server so reports don't overlap
-		for k, v := range targetData {
-			uniqueKey := fmt.Sprintf("%s_%s", pg.Host, k)
-			fileData[uniqueKey] = v
-		}
+			// 3. FIX: Make the fileData keys unique per server so reports don't overlap
+			for k, v := range targetData {
+				uniqueKey := fmt.Sprintf("%s_%s", pg.Host, k)
+				fileData[uniqueKey] = v
+			}
 
-		if cnf.MainServer.Enabled && len(targetData) > 0 {
-			if client, cErr := mainserverclient.New(cnf); cErr == nil {
-				runErr := ""
-				if err != nil {
-					runErr = err.Error()
+			if cnf.MainServer.Enabled && len(targetData) > 0 {
+				if client, cErr := mainserverclient.New(cnf); cErr == nil {
+					runErr := ""
+					if err != nil {
+						runErr = err.Error()
+					}
+
+					pushMainServerTickResults(cnf, client, targetData, runStarted, time.Now().UTC(), pg, "manual", []string{cons.RootCMD_PostgresCIS}, runErr)
+					manualPushed = true
 				}
-
-				pushMainServerTickResults(cnf, client, targetData, runStarted, time.Now().UTC(), pg, "manual", []string{cons.RootCMD_PostgresCIS}, runErr)
-				manualPushed = true
 			}
 		}
 	}
-}
 	if cnf.App.HBASacanner {
 		for _, pg := range cnf.PostgresTargets() {
 			targetData := map[string]interface{}{}
