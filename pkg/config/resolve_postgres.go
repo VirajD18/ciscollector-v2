@@ -3,7 +3,7 @@ package config
 import (
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 // ResolvePostgresTarget returns connection settings for a PII scan target.

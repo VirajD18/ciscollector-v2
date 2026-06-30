@@ -9,8 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/VirajD18/ciscollector-v2/model"
 	"github.com/hashicorp/go-version"
-	"github.com/klouddb/klouddbshield/model"
 )
 
 type Execute func(context.Context) *model.Result

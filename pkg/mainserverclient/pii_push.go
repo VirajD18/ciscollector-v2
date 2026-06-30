@@ -4,9 +4,9 @@ import (
 	"context"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 // PiiReportRequest is posted to /api/collector/pii after a PII scan.

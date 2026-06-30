@@ -8,8 +8,8 @@ import (
 	context "context"
 	reflect "reflect"
 
-	model "github.com/klouddb/klouddbshield/model"
-	rds "github.com/klouddb/klouddbshield/rds"
+	model "github.com/VirajD18/ciscollector-v2/model"
+	rds "github.com/VirajD18/ciscollector-v2/rds"
 	gomock "go.uber.org/mock/gomock"
 )
 

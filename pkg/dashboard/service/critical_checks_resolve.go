@@ -5,7 +5,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 var rePasswordEncryption = regexp.MustCompile(`(?i)password_encryption\s*:\s*([^\s,]+)`)

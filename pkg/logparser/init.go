@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/pkg/parselog"
+	"github.com/VirajD18/ciscollector-v2/pkg/parselog"
 )
 
 type ResultCalculator interface {

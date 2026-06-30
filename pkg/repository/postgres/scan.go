@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 
-	reprows "github.com/klouddb/klouddbshield/pkg/repository/rows"
+	reprows "github.com/VirajD18/ciscollector-v2/pkg/repository/rows"
 )
 
 func scanCollectorNodes(rows *sql.Rows) ([]reprows.CollectorNodeRow, error) {

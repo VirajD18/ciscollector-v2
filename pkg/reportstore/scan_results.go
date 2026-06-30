@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 	"github.com/google/uuid"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 )
 
 // ScanResultMeta extends run metadata with collector node attribution.

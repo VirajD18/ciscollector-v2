@@ -7,9 +7,9 @@ import (
 	"os"
 	"strings"
 
+	"github.com/VirajD18/ciscollector-v2/rds"
+	"github.com/VirajD18/ciscollector-v2/simpletextreport"
 	"github.com/jedib0t/go-pretty/text"
-	"github.com/klouddb/klouddbshield/rds"
-	"github.com/klouddb/klouddbshield/simpletextreport"
 )
 
 type rdsRunner struct {

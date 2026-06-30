@@ -12,9 +12,9 @@ import (
 	"github.com/jedib0t/go-pretty/v6/table"
 
 	// "github.com/jedib0t/go-pretty/table"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 	"github.com/jedib0t/go-pretty/text"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
 )
 
 func HBAScannerByControl(store *sql.DB, ctx context.Context, control string) *model.HBAScannerResult {

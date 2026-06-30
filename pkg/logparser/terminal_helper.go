@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/logger"
+	"github.com/VirajD18/ciscollector-v2/pkg/runner"
 	"github.com/jedib0t/go-pretty/v6/text"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/logger"
-	"github.com/klouddb/klouddbshield/pkg/runner"
 	"github.com/olekukonko/tablewriter"
 )
 

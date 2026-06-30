@@ -5,9 +5,9 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/hbarules"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/hbarules"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 var LogPrefixPostgresIpsRegexp = regexp.MustCompile(`(\s*)connection received:(\s+)host=(\S+)?(\s+)port=(\d+)?`)

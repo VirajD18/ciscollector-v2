@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 type CheckFunc func(*sql.DB, context.Context) (*model.Result, error)

@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 func TestBuildNodePayload(t *testing.T) {

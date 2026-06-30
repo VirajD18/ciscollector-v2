@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	mainserversvc "github.com/klouddb/klouddbshield/pkg/mainserver/service"
+	mainserversvc "github.com/VirajD18/ciscollector-v2/pkg/mainserver/service"
 )
 
 // ScanDataRequest is the v2 collector scan payload (mirrors mainserverclient.ScanDataRequest).

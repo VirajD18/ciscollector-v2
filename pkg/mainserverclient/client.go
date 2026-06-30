@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/collectoridentity"
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/collectoridentity"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 )
 
 // Client pushes collector status and run data to the main-server.

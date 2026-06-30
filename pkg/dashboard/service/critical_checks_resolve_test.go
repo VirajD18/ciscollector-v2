@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 func TestResolveCriticalFromCIS(t *testing.T) {

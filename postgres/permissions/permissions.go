@@ -8,10 +8,10 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres/helper"
+	"github.com/VirajD18/ciscollector-v2/model"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres/helper"
 )
 
 // 2.1 Ensure the file permissions mask is correct

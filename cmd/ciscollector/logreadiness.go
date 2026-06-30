@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/logparser"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/logparser"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 func refreshPgSettingsForLogParser(ctx context.Context, store *sql.DB, pgSettings *model.PgSettings) error {

@@ -6,9 +6,9 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres/helper"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres/helper"
 )
 
 // 8.2 CheckPgBackRestInstallation checks if pgBackRest is installed and configured.

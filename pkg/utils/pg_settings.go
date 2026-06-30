@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 // GetPGSettings will give log_connections using query.

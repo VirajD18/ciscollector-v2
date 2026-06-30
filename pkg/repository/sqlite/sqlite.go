@@ -11,9 +11,9 @@ import (
 
 	_ "modernc.org/sqlite"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	reprows "github.com/klouddb/klouddbshield/pkg/repository/rows"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	reprows "github.com/VirajD18/ciscollector-v2/pkg/repository/rows"
 )
 
 const sqliteBusyTimeoutMs = 5000

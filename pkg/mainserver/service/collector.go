@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 // CollectorHeartbeat upserts fleet status from a collector heartbeat.

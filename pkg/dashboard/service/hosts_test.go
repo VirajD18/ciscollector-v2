@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	sqliterepo "github.com/klouddb/klouddbshield/pkg/repository/sqlite"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	sqliterepo "github.com/VirajD18/ciscollector-v2/pkg/repository/sqlite"
 )
 
 func TestParseHostKey(t *testing.T) {

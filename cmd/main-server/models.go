@@ -3,9 +3,9 @@ package main
 import (
 	"time"
 
-	dashboardsvc "github.com/klouddb/klouddbshield/pkg/dashboard/service"
-	mainserversvc "github.com/klouddb/klouddbshield/pkg/mainserver/service"
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	dashboardsvc "github.com/VirajD18/ciscollector-v2/pkg/dashboard/service"
+	mainserversvc "github.com/VirajD18/ciscollector-v2/pkg/mainserver/service"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 type App struct {

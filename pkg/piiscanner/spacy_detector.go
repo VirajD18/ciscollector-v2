@@ -27,7 +27,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	cmdprocessor "github.com/klouddb/klouddbshield/pkg/cmd_processor"
+	cmdprocessor "github.com/VirajD18/ciscollector-v2/pkg/cmd_processor"
 )
 
 // pythonResponse is the response from the python script.

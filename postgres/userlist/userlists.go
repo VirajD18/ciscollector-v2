@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 var runner = []UserlistHelper{

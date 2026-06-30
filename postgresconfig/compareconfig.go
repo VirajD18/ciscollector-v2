@@ -6,8 +6,8 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 type GroupedServers struct {

@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 )
 
 func newHTTPClient(ms config.MainServer) (*http.Client, error) {

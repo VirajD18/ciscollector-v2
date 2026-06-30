@@ -12,7 +12,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 var (

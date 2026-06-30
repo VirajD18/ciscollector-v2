@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/model"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 // 4.2 Ensure Example or Test Databases are Not Installed on Production Servers

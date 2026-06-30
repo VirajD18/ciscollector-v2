@@ -3,7 +3,7 @@ package piiscanner_test
 import (
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
 )
 
 func TestReportPayload(t *testing.T) {

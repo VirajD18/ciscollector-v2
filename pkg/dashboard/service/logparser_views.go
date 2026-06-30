@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
 )
 
 // LogParserCommandView is one log parser command result for API and host modules.

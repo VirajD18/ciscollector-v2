@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 func TestBuildPiiScannerConfig(t *testing.T) {

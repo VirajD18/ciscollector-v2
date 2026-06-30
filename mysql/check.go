@@ -8,15 +8,15 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/klouddb/klouddbshield/model"
-	auditinglogging "github.com/klouddb/klouddbshield/mysql/auditingLogging"
-	"github.com/klouddb/klouddbshield/mysql/authentication"
-	"github.com/klouddb/klouddbshield/mysql/filepermissions"
-	"github.com/klouddb/klouddbshield/mysql/general"
-	"github.com/klouddb/klouddbshield/mysql/installation"
-	"github.com/klouddb/klouddbshield/mysql/network"
-	"github.com/klouddb/klouddbshield/mysql/oslevelconfig"
-	"github.com/klouddb/klouddbshield/mysql/replication"
+	"github.com/VirajD18/ciscollector-v2/model"
+	auditinglogging "github.com/VirajD18/ciscollector-v2/mysql/auditingLogging"
+	"github.com/VirajD18/ciscollector-v2/mysql/authentication"
+	"github.com/VirajD18/ciscollector-v2/mysql/filepermissions"
+	"github.com/VirajD18/ciscollector-v2/mysql/general"
+	"github.com/VirajD18/ciscollector-v2/mysql/installation"
+	"github.com/VirajD18/ciscollector-v2/mysql/network"
+	"github.com/VirajD18/ciscollector-v2/mysql/oslevelconfig"
+	"github.com/VirajD18/ciscollector-v2/mysql/replication"
 )
 
 func PerformAllChecks(store *sql.DB, ctx context.Context) ([]*model.Result, map[int]*model.Status) {

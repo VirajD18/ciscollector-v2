@@ -10,10 +10,10 @@ import (
 	"sync"
 	"time"
 
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 	"github.com/jedib0t/go-pretty/v6/text"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/utils"
 	"github.com/schollz/progressbar/v3"
 )
 

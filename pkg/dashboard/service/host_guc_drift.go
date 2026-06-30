@@ -4,7 +4,7 @@ import (
 	"context"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/postgresconfig"
+	"github.com/VirajD18/ciscollector-v2/postgresconfig"
 )
 
 func (s *Service) resolveGucSnapshotTargetID(ctx context.Context, serverID, runTargetID string) string {

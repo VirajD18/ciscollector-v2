@@ -18,16 +18,16 @@ import (
 	// "github.com/rs/zerolog"
 	// "github.com/rs/zerolog/log"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/logger"
-	"github.com/klouddb/klouddbshield/pkg/mainserverclient"
-	"github.com/klouddb/klouddbshield/postgres"
-	"github.com/klouddb/klouddbshield/postgresconfig"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/logger"
+	"github.com/VirajD18/ciscollector-v2/pkg/mainserverclient"
+	"github.com/VirajD18/ciscollector-v2/postgres"
+	"github.com/VirajD18/ciscollector-v2/postgresconfig"
 	// "github.com/klouddb/klouddbshiled/cmd/main-server/main"
-	// "github.com/klouddb/klouddbshield/pkg/config/config.go"
+	// "github.com/VirajD18/ciscollector-v2/pkg/config/config.go"
 )
 
 func init() {

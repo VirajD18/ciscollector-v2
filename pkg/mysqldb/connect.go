@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 	"github.com/rs/zerolog/log"
 
 	_ "github.com/go-sql-driver/mysql"

@@ -3,11 +3,11 @@ package main
 import (
 	"context"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/mysql"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/mysqldb"
-	"github.com/klouddb/klouddbshield/simpletextreport"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/mysql"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/mysqldb"
+	"github.com/VirajD18/ciscollector-v2/simpletextreport"
 )
 
 type mysqlRunner struct {

@@ -6,16 +6,16 @@ import (
 	"regexp"
 	"strings"
 
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres"
+	"github.com/VirajD18/ciscollector-v2/postgres/userlist"
+	"github.com/VirajD18/ciscollector-v2/simpletextreport"
 	"github.com/jedib0t/go-pretty/text"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres"
-	"github.com/klouddb/klouddbshield/postgres/userlist"
-	"github.com/klouddb/klouddbshield/simpletextreport"
 )
 
 type postgresRunner struct {

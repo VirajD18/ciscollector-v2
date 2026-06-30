@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 	"github.com/stretchr/testify/assert"
 )
 

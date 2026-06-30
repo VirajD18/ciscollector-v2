@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 func reportRawKeys(report map[string]interface{}) []string {

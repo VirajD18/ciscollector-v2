@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 var reStripCmdNoise = regexp.MustCompile(`(?i)(cmd:|cmderr:|outerr:|execvpe|createprocess|wsl\s*\()`)

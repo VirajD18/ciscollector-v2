@@ -9,17 +9,17 @@ import (
 
 	"github.com/rs/zerolog/log"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres/auth"
-	"github.com/klouddb/klouddbshield/postgres/connection"
-	"github.com/klouddb/klouddbshield/postgres/helper"
-	"github.com/klouddb/klouddbshield/postgres/installation"
-	"github.com/klouddb/klouddbshield/postgres/lma"
-	"github.com/klouddb/klouddbshield/postgres/permissions"
-	"github.com/klouddb/klouddbshield/postgres/replication"
-	"github.com/klouddb/klouddbshield/postgres/settings"
-	"github.com/klouddb/klouddbshield/postgres/special"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres/auth"
+	"github.com/VirajD18/ciscollector-v2/postgres/connection"
+	"github.com/VirajD18/ciscollector-v2/postgres/helper"
+	"github.com/VirajD18/ciscollector-v2/postgres/installation"
+	"github.com/VirajD18/ciscollector-v2/postgres/lma"
+	"github.com/VirajD18/ciscollector-v2/postgres/permissions"
+	"github.com/VirajD18/ciscollector-v2/postgres/replication"
+	"github.com/VirajD18/ciscollector-v2/postgres/settings"
+	"github.com/VirajD18/ciscollector-v2/postgres/special"
 )
 
 var referenceMap = map[string]string{

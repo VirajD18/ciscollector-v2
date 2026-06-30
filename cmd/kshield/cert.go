@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/cert"
+	"github.com/VirajD18/ciscollector-v2/pkg/cert"
 )
 
 func run(args []string) error {

@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 func TestEvalFromUsersReportAllTop25SQLChecks(t *testing.T) {

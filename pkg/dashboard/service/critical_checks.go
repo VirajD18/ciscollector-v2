@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 var criticalCheckTitles = []string{

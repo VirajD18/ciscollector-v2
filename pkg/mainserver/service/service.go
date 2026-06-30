@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 // Service contains main-server business logic over the storage repository.

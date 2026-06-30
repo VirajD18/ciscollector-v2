@@ -8,8 +8,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 	"github.com/google/uuid"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 )
 
 // TargetID builds a stable id from postgres connection info.

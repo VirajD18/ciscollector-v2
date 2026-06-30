@@ -7,11 +7,11 @@ import (
 	"html"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	"github.com/klouddb/klouddbshield/pkg/repository"
-	"github.com/klouddb/klouddbshield/postgres"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/postgres"
 )
 
 // RenderRunHTML builds the full multi-tab KloudDB Shield HTML report from persisted report_json.
@@ -38,7 +38,7 @@ func renderFullHTMLReport(ctx context.Context, repo repository.Repository, run *
 
 	if cis := decodeCISResults(report); len(cis) > 0 {
 		ptrs := cisResultPointers(cis)
-		helper.RegisterPostgresReportData(ptrs, postgres.CalculateScore(ptrs), decodePostgresVersion(report), true)
+		helper.RegisterPostgresReportData(ptrs, postgres.CalculateScore(ptrs), decodePostgresVersion(report), report.Host, true)
 		hasTabs = true
 	}
 

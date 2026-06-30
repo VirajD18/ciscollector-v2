@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 func CheckForAllSourceTypesAllEventCategoriesDBSecurityGroup(ctx context.Context, sub *EventSubscription) bool {

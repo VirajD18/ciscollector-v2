@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
+	dashboardsvc "github.com/VirajD18/ciscollector-v2/pkg/dashboard/service"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 	"github.com/gorilla/mux"
-	dashboardsvc "github.com/klouddb/klouddbshield/pkg/dashboard/service"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
 )
 
 func (a *App) dashboardSvc() *dashboardsvc.Service {

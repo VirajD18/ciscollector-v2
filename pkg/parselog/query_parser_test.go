@@ -3,7 +3,7 @@ package parselog
 import (
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
 )
 
 type Test struct {

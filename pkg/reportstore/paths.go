@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 )
 
 // DefaultStorage returns defaults when [storage] is omitted from TOML.

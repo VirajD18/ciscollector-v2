@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 	"github.com/google/uuid"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 )
 
 // PersistPIIReport writes only pii_report_json and pii_scanned_at for the latest run of target_id.

@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 func GetDatabaseAndHostForUSerFromHbaFileRules(ctx context.Context, store *sql.DB) ([]model.HBAFIleRules, error) {

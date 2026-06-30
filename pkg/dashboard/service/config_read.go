@@ -4,7 +4,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 	"github.com/pelletier/go-toml/v2"
 )
 

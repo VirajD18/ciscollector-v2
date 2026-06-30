@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 // Hosts builds the hosts table grouped by PostgreSQL instance (host:port).

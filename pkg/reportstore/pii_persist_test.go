@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 func TestPersistPIIReportUsesRunsTable(t *testing.T) {

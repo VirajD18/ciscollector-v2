@@ -9,8 +9,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/parselog"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/parselog"
 )
 
 func TestFastRunner(t *testing.T) {

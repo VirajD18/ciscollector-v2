@@ -7,14 +7,14 @@ import (
 	"os"
 	"time"
 
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/logparser"
+	"github.com/VirajD18/ciscollector-v2/pkg/parselog"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/runner"
 	"github.com/jedib0t/go-pretty/text"
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/logparser"
-	"github.com/klouddb/klouddbshield/pkg/parselog"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/runner"
 )
 
 type logParserRunner struct {

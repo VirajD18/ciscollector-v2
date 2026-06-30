@@ -5,9 +5,9 @@ import (
 	"sort"
 	"time"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 // Service reads persisted scan reports for the dashboard APIs.

@@ -6,11 +6,11 @@ import (
 	"os"
 	"text/tabwriter"
 
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/postgres/calctransactions"
 	"github.com/jedib0t/go-pretty/v6/text"
-	"github.com/klouddb/klouddbshield/htmlreport"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/postgres/calctransactions"
 )
 
 type calTransactionRunner struct {

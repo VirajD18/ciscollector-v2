@@ -8,8 +8,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	sqliterepo "github.com/klouddb/klouddbshield/pkg/repository/sqlite"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	sqliterepo "github.com/VirajD18/ciscollector-v2/pkg/repository/sqlite"
 )
 
 func TestPersistScanResultConcurrent(t *testing.T) {

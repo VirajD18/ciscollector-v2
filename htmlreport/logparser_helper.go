@@ -4,10 +4,10 @@ import (
 	"context"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/hbarules"
-	"github.com/klouddb/klouddbshield/pkg/logparser"
-	"github.com/klouddb/klouddbshield/pkg/parselog"
-	"github.com/klouddb/klouddbshield/pkg/runner"
+	"github.com/VirajD18/ciscollector-v2/pkg/hbarules"
+	"github.com/VirajD18/ciscollector-v2/pkg/logparser"
+	"github.com/VirajD18/ciscollector-v2/pkg/parselog"
+	"github.com/VirajD18/ciscollector-v2/pkg/runner"
 )
 
 type LogparserHTMLReport struct {

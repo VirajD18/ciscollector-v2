@@ -8,7 +8,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 const Pass = "Pass"

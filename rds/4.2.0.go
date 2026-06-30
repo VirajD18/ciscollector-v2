@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 type RdsSubscriptions struct {

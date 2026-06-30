@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	"github.com/klouddb/klouddbshield/postgresconfig"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/postgresconfig"
 )
 
 func (s *Service) gucDriftFromSnapshots(ctx context.Context) (*GucDriftResponse, error) {

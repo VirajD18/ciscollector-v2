@@ -8,11 +8,11 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/passwordmanager"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 	"github.com/jedib0t/go-pretty/text"
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/passwordmanager"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
 	"golang.org/x/term"
 )
 

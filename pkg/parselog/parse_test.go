@@ -4,8 +4,8 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 	"github.com/stretchr/testify/assert"
 )
 

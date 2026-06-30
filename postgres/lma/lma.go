@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres/helper"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres/helper"
 )
 
 // 3.1.2 Ensure the log destinations are set correctly v16

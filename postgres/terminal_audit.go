@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 	"github.com/jedib0t/go-pretty/text"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
 )
 
 // PrintSSLAuditSummary prints the SSL audit results in a table format

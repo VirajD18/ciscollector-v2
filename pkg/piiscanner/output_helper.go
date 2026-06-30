@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 	"github.com/jedib0t/go-pretty/v6/text"
-	"github.com/klouddb/klouddbshield/pkg/utils"
 	"github.com/olekukonko/tablewriter"
 )
 

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
 	"github.com/jedib0t/go-pretty/v6/text"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
 )
 
 /*

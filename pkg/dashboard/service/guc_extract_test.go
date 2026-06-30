@@ -3,7 +3,7 @@ package service
 import (
 	"testing"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 func TestExtractGucNameFromTitle(t *testing.T) {

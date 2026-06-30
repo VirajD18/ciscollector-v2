@@ -12,7 +12,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
 	_ "modernc.org/sqlite"
 )
 

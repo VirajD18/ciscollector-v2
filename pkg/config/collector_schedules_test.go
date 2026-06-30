@@ -4,8 +4,8 @@ import (
 	"strings"
 	"testing"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 func TestCommandsFromPostgres_piiScanner(t *testing.T) {

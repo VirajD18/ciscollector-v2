@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/postgresconfig"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/postgresconfig"
 )
 
 type compareConfigRunner struct {

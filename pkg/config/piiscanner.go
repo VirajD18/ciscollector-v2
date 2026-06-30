@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"strings"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 // PiiScannerInput holds [piiscanner] settings from kshieldconfig.toml.

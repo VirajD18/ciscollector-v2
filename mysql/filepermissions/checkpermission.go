@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/model"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/model"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 // 3.1 Ensure 'datadir' Has Appropriate Permissions

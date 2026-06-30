@@ -3,10 +3,10 @@ package main
 import (
 	"context"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/postgres"
-	"github.com/klouddb/klouddbshield/postgres/sslaudit"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/postgres"
+	"github.com/VirajD18/ciscollector-v2/postgres/sslaudit"
 )
 
 type sslAuditor struct {

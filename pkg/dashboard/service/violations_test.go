@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
+	"github.com/VirajD18/ciscollector-v2/model"
 )
 
 func TestViolationsRowsHaveDetectedAt(t *testing.T) {

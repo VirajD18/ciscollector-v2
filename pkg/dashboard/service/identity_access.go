@@ -3,7 +3,7 @@ package service
 import (
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 // buildIdentityAccess derives Identity & access widgets from Users Report in SQLite scans.

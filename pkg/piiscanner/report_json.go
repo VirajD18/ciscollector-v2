@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 // ToReportJSON builds the payload stored in runs.pii_report_json for the dashboard API.

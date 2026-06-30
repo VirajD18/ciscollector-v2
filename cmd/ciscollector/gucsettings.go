@@ -6,10 +6,10 @@ import (
 	"slices"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/postgresconfig"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/postgresconfig"
 )
 
 const gucSettingsReportKey = "GUC Settings"

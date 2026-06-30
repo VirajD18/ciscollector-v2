@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 func connectionStatus(lastSeen time.Time, threshold time.Duration) string {

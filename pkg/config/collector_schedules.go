@@ -5,9 +5,9 @@ import (
 	"slices"
 	"strings"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	shieldcron "github.com/klouddb/klouddbshield/pkg/cron"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	shieldcron "github.com/VirajD18/ciscollector-v2/pkg/cron"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 var logParserScanTokens = []string{

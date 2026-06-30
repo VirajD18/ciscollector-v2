@@ -7,8 +7,8 @@ import (
 	"sort"
 	"time"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/pkg/backuphistory"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/pkg/backuphistory"
 )
 
 type backupHistory struct {

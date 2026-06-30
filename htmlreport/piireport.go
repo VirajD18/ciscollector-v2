@@ -1,6 +1,6 @@
 package htmlreport
 
-import "github.com/klouddb/klouddbshield/pkg/piiscanner"
+import "github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
 
 func (h *HtmlReportHelper) RegisterPIIReport(result *piiscanner.DatabasePIIScanOutput) {
 	if result == nil {

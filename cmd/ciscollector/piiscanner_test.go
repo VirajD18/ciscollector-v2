@@ -5,9 +5,9 @@ import (
 	"runtime"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 func Benchmark_piiDbScaner_run(b *testing.B) {

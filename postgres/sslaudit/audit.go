@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/utils"
-	"github.com/klouddb/klouddbshield/postgres/hbascanner"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/postgres/hbascanner"
 )
 
 func AuditSSL(ctx context.Context, store *sql.DB, host string, port string) (*model.SSLScanResult, error) {

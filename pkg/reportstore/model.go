@@ -3,7 +3,7 @@ package reportstore
 import (
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 // RunMeta describes one persisted scan (cron tick or manual --json).

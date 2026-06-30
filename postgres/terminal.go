@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/VirajD18/ciscollector-v2/model"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
 	"github.com/jedib0t/go-pretty/text"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/klouddb/klouddbshield/model"
-	cons "github.com/klouddb/klouddbshield/pkg/const"
 )
 
 func PrintScore(score map[int]*model.Status) {

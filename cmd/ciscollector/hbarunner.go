@@ -5,12 +5,12 @@ import (
 	"os"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/postgres/hbascanner"
-	"github.com/klouddb/klouddbshield/simpletextreport"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/postgres/hbascanner"
+	"github.com/VirajD18/ciscollector-v2/simpletextreport"
 )
 
 type hbaRunner struct {

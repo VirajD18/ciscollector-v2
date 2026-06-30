@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/klouddb/klouddbshield/pkg/repository/postgres"
-	"github.com/klouddb/klouddbshield/pkg/repository/sqlite"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository/postgres"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository/sqlite"
 )
 
 // Open creates a repository for the configured storage driver.

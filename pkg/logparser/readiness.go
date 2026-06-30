@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"strings"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
 )
 
 const LogReadinessReportKey = "Log Readiness Report"

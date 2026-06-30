@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 const postgresTestTimeout = 10 * time.Second

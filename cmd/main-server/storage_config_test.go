@@ -3,7 +3,7 @@ package main
 import (
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 func TestResolveStorageConfig(t *testing.T) {

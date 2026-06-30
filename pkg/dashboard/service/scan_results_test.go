@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 func TestLatestRunsByTargetDedupesScanResults(t *testing.T) {

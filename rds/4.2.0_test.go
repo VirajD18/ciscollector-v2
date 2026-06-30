@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/klouddb/klouddbshield/model"
-	"github.com/klouddb/klouddbshield/rds"
-	"github.com/klouddb/klouddbshield/rds/mock"
+	"github.com/VirajD18/ciscollector-v2/model"
+	"github.com/VirajD18/ciscollector-v2/rds"
+	"github.com/VirajD18/ciscollector-v2/rds/mock"
 	"go.uber.org/mock/gomock"
 )
 

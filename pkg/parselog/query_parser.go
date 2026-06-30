@@ -6,10 +6,10 @@ import (
 	"regexp"
 	"sync"
 
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
-	"github.com/klouddb/klouddbshield/pkg/queryparser"
-	"github.com/klouddb/klouddbshield/pkg/utils"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/queryparser"
+	"github.com/VirajD18/ciscollector-v2/pkg/utils"
 )
 
 // PIIResp is a struct that holds the column and value of the PII data.

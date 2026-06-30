@@ -3,8 +3,8 @@ package rds
 import (
 	"strings"
 
+	"github.com/VirajD18/ciscollector-v2/model"
 	"github.com/jedib0t/go-pretty/v6/table"
-	"github.com/klouddb/klouddbshield/model"
 )
 
 type rdsPrinter struct {

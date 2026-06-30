@@ -5,9 +5,9 @@ import (
 	"database/sql"
 	"testing"
 
-	dashboardsvc "github.com/klouddb/klouddbshield/pkg/dashboard/service"
-	mainserversvc "github.com/klouddb/klouddbshield/pkg/mainserver/service"
-	sqliterepo "github.com/klouddb/klouddbshield/pkg/repository/sqlite"
+	dashboardsvc "github.com/VirajD18/ciscollector-v2/pkg/dashboard/service"
+	mainserversvc "github.com/VirajD18/ciscollector-v2/pkg/mainserver/service"
+	sqliterepo "github.com/VirajD18/ciscollector-v2/pkg/repository/sqlite"
 )
 
 func testAppFromSQLiteDB(t *testing.T, db *sql.DB, dbPath string, kshieldCfg string) *App {

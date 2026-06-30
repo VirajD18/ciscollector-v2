@@ -3,7 +3,7 @@ package repository_test
 import (
 	"testing"
 
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 func TestConfigValidate(t *testing.T) {

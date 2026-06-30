@@ -4,7 +4,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/repository"
+	"github.com/VirajD18/ciscollector-v2/pkg/repository"
 )
 
 // resolveStorageConfig merges CLI values, server-node.yaml, and environment into storage config.

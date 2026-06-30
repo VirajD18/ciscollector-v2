@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/klouddb/klouddbshield/htmlreport"
-	"github.com/klouddb/klouddbshield/pkg/config"
-	"github.com/klouddb/klouddbshield/pkg/mainserverclient"
-	"github.com/klouddb/klouddbshield/pkg/piiscanner"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/htmlreport"
+	"github.com/VirajD18/ciscollector-v2/pkg/config"
+	"github.com/VirajD18/ciscollector-v2/pkg/mainserverclient"
+	"github.com/VirajD18/ciscollector-v2/pkg/piiscanner"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
 )
 
 type piiDbScanner struct {

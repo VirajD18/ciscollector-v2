@@ -11,10 +11,10 @@ import (
 	"github.com/google/uuid"
 	_ "github.com/lib/pq"
 
-	cons "github.com/klouddb/klouddbshield/pkg/const"
-	"github.com/klouddb/klouddbshield/pkg/postgresdb"
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
-	reprows "github.com/klouddb/klouddbshield/pkg/repository/rows"
+	cons "github.com/VirajD18/ciscollector-v2/pkg/const"
+	"github.com/VirajD18/ciscollector-v2/pkg/postgresdb"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
+	reprows "github.com/VirajD18/ciscollector-v2/pkg/repository/rows"
 )
 
 const runsTable = "scan_results"

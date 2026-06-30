@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/klouddb/klouddbshield/pkg/reportstore"
+	"github.com/VirajD18/ciscollector-v2/pkg/reportstore"
 )
 
 func (agg *fleetAccumulator) collectHBAIssues(host string, report map[string]interface{}) {
