@@ -24,17 +24,20 @@ type postgresRunner struct {
 	htmlReportHelper *htmlreport.HtmlReportHelper
 	outputType       string
 	fileData         map[string]interface{}
+	hostname         string
 }
 
+// Notice the ", hostname string" added right before the closing parenthesis!
 func newPostgresRunnerFromConfig(postgresConfig *postgresdb.Postgres, fileData map[string]interface{},
-	postgresCheckSet utils.Set[string], htmlReportHelper *htmlreport.HtmlReportHelper, outputType string) *postgresRunner {
-	return &postgresRunner{
-		postgresConfig:   postgresConfig,
-		fileData:         fileData,
-		postgresCheckSet: postgresCheckSet,
-		htmlReportHelper: htmlReportHelper,
-		outputType:       outputType,
-	}
+        postgresCheckSet utils.Set[string], htmlReportHelper *htmlreport.HtmlReportHelper, outputType string, hostname string) *postgresRunner {
+        return &postgresRunner{
+                postgresConfig:   postgresConfig,
+                fileData:         fileData,
+                postgresCheckSet: postgresCheckSet,
+                htmlReportHelper: htmlReportHelper,
+                outputType:       outputType,
+                hostname:         hostname,
+        }
 }
 
 func (p *postgresRunner) cronProcess(ctx context.Context) error {
@@ -90,7 +93,7 @@ func (p *postgresRunner) run(ctx context.Context) (map[int]*model.Status, error)
 	}
 
 	p.htmlReportHelper.RegisterPostgresReportData(listOfResults, scoreMap,
-		version, p.postgresConfig.Host, p.postgresCheckSet.Len() == 0 /* when there is any data from custom template then we need to skip summary part in htmlreport */)
+		version, p.hostname, p.postgresCheckSet.Len() == 0) // THIS FIXES LINE 95
 	p.htmlReportHelper.RegisterUserlistData(out)
 
 	return scoreMap, nil

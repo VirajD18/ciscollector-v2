@@ -1691,7 +1691,7 @@ func Check_LMA_Results(settingsMap map[string]string) map[string]*model.Result {
 	}
 
 	// 3.1.20 Ensure 'log_connections' is enabled
-	if settingsMap["log_connections"] != "on" {
+	if settingsMap["log_connections"] != "on" && settingsMap["log_connections"] != "all" {
 		lmaResultsMap["log_connections"].Status = "Fail"
 		lmaResultsMap["log_connections"].FailReason = "log_connections is not enabled"
 	} else {

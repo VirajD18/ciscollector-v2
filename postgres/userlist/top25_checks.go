@@ -33,7 +33,7 @@ var top25Runner = []UserlistHelper{
 	{
 		Title: "log_connections enabled (Top 25 check #11)",
 		Query: `SELECT current_setting('log_connections') AS setting,
-       (current_setting('log_connections') = 'on') AS pass;`,
+       (current_setting('log_connections') IN ('on', 'all')) AS pass;`,
 	},
 	{
 		Title: "log_disconnections enabled (Top 25 check #12)",

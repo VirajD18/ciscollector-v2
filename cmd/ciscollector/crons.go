@@ -28,7 +28,7 @@ type Runner interface {
 	cronProcess(ctx context.Context) error
 }
 
-func getProcessorsForCron(schedule string, commnd *config.Command, htmlHelperMap htmlreport.HtmlReportHelperMap, fileData map[string]interface{}, shield *config.Config) ([]Runner, error) {
+func getProcessorsForCron(schedule string, commnd *config.Command, htmlHelperMap htmlreport.HtmlReportHelperMap, fileData map[string]interface{}, shield *config.Config, hostname string) ([]Runner, error) {
 	switch commnd.Name {
 	case cons.RootCMD_All:
 		if len(commnd.Postgres) == 0 {
@@ -40,19 +40,17 @@ func getProcessorsForCron(schedule string, commnd *config.Command, htmlHelperMap
 			htmlHelper := htmlHelperMap.Get(p.HtmlReportName())
 
 			out = append(out, newPostgresRunnerFromConfig(p, fileData,
-				utils.NewDummyContainsAllSet[string](), htmlHelper, "json"))
+				utils.NewDummyContainsAllSet[string](), htmlHelper, "json", hostname))
 			out = append(out, newHBARunnerFromConfig(p, fileData, htmlHelper, "json"))
 			out = append(out, newSslAuditor(p, fileData, htmlHelper, "json"))
-
 			out = append(out, newPwnedUserRunner(p, true, fileData, htmlHelper, "json"))
 		}
 
-		logPaser, err := getLogParserCron(schedule, commnd, htmlHelperMap, fileData)
+		logParsers, err := getLogParserCron(schedule, commnd, htmlHelperMap, fileData)
 		if err != nil {
 			return nil, err
 		}
-
-		out = append(out, logPaser...)
+		out = append(out, logParsers...)
 
 		if shield != nil {
 			for _, p := range commnd.Postgres {
@@ -64,8 +62,8 @@ func getProcessorsForCron(schedule string, commnd *config.Command, htmlHelperMap
 				out = append(out, newPiiDbScanner(p, piiCfg, htmlHelper, shield))
 			}
 		}
-
 		return out, nil
+
 	case cons.RootCMD_AllCore:
 		if len(commnd.Postgres) == 0 {
 			return nil, fmt.Errorf(cons.Err_PostgresConfig_Missing)
@@ -74,55 +72,48 @@ func getProcessorsForCron(schedule string, commnd *config.Command, htmlHelperMap
 		for _, p := range commnd.Postgres {
 			htmlHelper := htmlHelperMap.Get(p.HtmlReportName())
 			out = append(out, newPostgresRunnerFromConfig(p, fileData,
-				utils.NewDummyContainsAllSet[string](), htmlHelper, "json"))
+				utils.NewDummyContainsAllSet[string](), htmlHelper, "json", hostname))
 			out = append(out, newHBARunnerFromConfig(p, fileData, htmlHelper, "json"))
 			out = append(out, newSslAuditor(p, fileData, htmlHelper, "json"))
 			out = append(out, newPwnedUserRunner(p, true, fileData, htmlHelper, "json"))
 		}
 		return out, nil
+
 	case cons.RootCMD_PostgresCIS:
 		if len(commnd.Postgres) == 0 {
 			return nil, fmt.Errorf(cons.Err_PostgresConfig_Missing)
 		}
-
 		out := make([]Runner, 0, len(commnd.Postgres))
 		for _, p := range commnd.Postgres {
 			out = append(out, newPostgresRunnerFromConfig(p, fileData,
-				utils.NewDummyContainsAllSet[string](), htmlHelperMap.Get(p.HtmlReportName()), "json"))
+				utils.NewDummyContainsAllSet[string](), htmlHelperMap.Get(p.HtmlReportName()), "json", hostname))
 		}
-
 		return out, nil
 
 	case cons.RootCMD_HBAScanner:
 		if len(commnd.Postgres) == 0 {
 			return nil, fmt.Errorf(cons.Err_PostgresConfig_Missing)
 		}
-
 		out := make([]Runner, 0, len(commnd.Postgres))
 		for _, p := range commnd.Postgres {
 			out = append(out, newHBARunnerFromConfig(p, fileData, htmlHelperMap.Get(p.HtmlReportName()), "json"))
 		}
-
 		return out, nil
 
 	case cons.RootCMD_SSLCheck:
 		if len(commnd.Postgres) == 0 {
 			return nil, fmt.Errorf(cons.Err_PostgresConfig_Missing)
 		}
-
 		out := make([]Runner, 0, len(commnd.Postgres))
 		for _, p := range commnd.Postgres {
 			out = append(out, newSslAuditor(p, fileData, htmlHelperMap.Get(p.HtmlReportName()), "json"))
 		}
-
 		return out, nil
 
 	case cons.PasswordManager_CommonUsers:
-		// check other 3 options
 		if len(commnd.Postgres) == 0 {
 			return nil, fmt.Errorf(cons.Err_PostgresConfig_Missing)
 		}
-
 		out := make([]Runner, 0, len(commnd.Postgres))
 		for _, p := range commnd.Postgres {
 			out = append(out, newPwnedUserRunner(p, false, fileData, htmlHelperMap.Get(p.HtmlReportName()), "json"))
@@ -399,7 +390,7 @@ func (c *cronHelper) scheduleRunner(schedule string, commands []config.Command) 
 				}
 				st.features = append(st.features, commnd.Name)
 
-				processors, err := getProcessorsForCron(sched, &pgCmd, htmlHelperMap, st.fileData, c.cnf)
+				processors, err := getProcessorsForCron(sched, &pgCmd, htmlHelperMap, st.fileData, c.cnf, c.cnf.App.Hostname)
 				if err != nil {
 					fmt.Printf("Error: %v\n", err)
 					if runErr == "" {
