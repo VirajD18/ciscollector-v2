@@ -2,10 +2,16 @@
     <div class="wrapper">
         <div class="myContainer">
 	    {{ if .ServerName }}
-                <h2 style="text-align: center; color: #373854; margin-bottom: 20px; display: none;">
-                    {{ .ServerName }} Secure
-                </h2>
-            {{ end }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var headerSpan = document.getElementById("dynamic-header");
+            if (headerSpan) {
+                // This injects your dynamic server name right next to the logo!
+                headerSpan.innerHTML = "<strong>{{ .ServerName }} Secure Configuration Report (CIS)</strong>";
+            }
+        });
+    </script>
+{{ end }}
             {{ if .Summary }}
                 <div id="summaryStats">
                     <h3>Summary</h3>

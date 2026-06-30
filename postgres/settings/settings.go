@@ -30,8 +30,8 @@ Logging can be altered and obfuscated inhibiting root cause analysis.`,
 		post_auth_delay | 0
 
 		Validate output to match with above`,
-		References: `CIS PostgreSQL 13
-		v1.2.0 - 03-29-2024`,
+		References: `CIS PostgreSQL 18
+		v1.2.0 - 09-25-2025`,
 		Description: `In order to serve multiple clients efficiently, the PostgreSQL server launches a new "backend" process for each client.
 		The runtime parameters in this benchmark section are controlled by the backend process.
 		The server's performance, in the form of slow queries causing a denial of service, and the RDBM's auditing abilities for determining root cause analysis can be compromised via these parameters.`,
@@ -77,7 +77,7 @@ Logging can be altered and obfuscated inhibiting root cause analysis.`,
 		if ignoreSystemIndexes == "off" &&
 			jitDebuggingSupport == "off" &&
 			jitprofilingSupport == "off" &&
-			logConnections == "on" &&
+			(logConnections == "on" || logConnections == "all") &&
 			logDisconnections == "on" &&
 			postAuthDelay == "0" {
 			result.Status = "Pass"
