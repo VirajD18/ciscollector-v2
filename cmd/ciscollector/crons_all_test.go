@@ -75,7 +75,7 @@ func TestGetProcessorsForCron_allIncludesPii(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			fileData := map[string]interface{}{}
 			htmlHelperMap := htmlreport.NewHtmlReportHelperMap()
-			runners, err := getProcessorsForCron("0 12 * * *", cmd, htmlHelperMap, fileData, tt.shield)
+			runners, err := getProcessorsForCron("0 12 * * *", cmd, htmlHelperMap, fileData, tt.shield, "")
 			if err != nil {
 				t.Fatalf("getProcessorsForCron: %v", err)
 			}
