@@ -68,9 +68,10 @@ func RenderTemplateFile(templateName, outputfile string, data interface{}, perm 
 }
 
 type Tab struct {
-	Title    string
-	Body     interface{}
-	Priority int
+	Title      string
+	Body       interface{}
+	Priority   int
+	ServerName string
 }
 
 type HtmlReportHelperMap map[string]*HtmlReportHelper
