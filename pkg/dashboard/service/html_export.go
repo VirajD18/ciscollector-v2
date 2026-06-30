@@ -38,7 +38,7 @@ func renderFullHTMLReport(ctx context.Context, repo repository.Repository, run *
 
 	if cis := decodeCISResults(report); len(cis) > 0 {
 		ptrs := cisResultPointers(cis)
-		helper.RegisterPostgresReportData(ptrs, postgres.CalculateScore(ptrs), decodePostgresVersion(report), report.Host, true)
+		helper.RegisterPostgresReportData(ptrs, postgres.CalculateScore(ptrs), decodePostgresVersion(report), report["Host"].(string), true)
 		hasTabs = true
 	}
 
