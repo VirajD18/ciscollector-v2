@@ -26,15 +26,17 @@ type PostgresReport struct {
 	PostgresResults []*model.Result
 	Summary         *SectionSummary
 	PostgresVersion string
+	ServerName      string // Add this line
 }
 
-func (h *HtmlReportHelper) RegisterPostgresReportData(listOfResults []*model.Result, scoreMap map[int]*model.Status, database string, printSummary bool) {
+func (h *HtmlReportHelper) RegisterPostgresReportData(listOfResults []*model.Result, scoreMap map[int]*model.Status, database string, serverName string, printSummary bool) {
 
 	if !printSummary {
 		// Add the data to the template
 		tabData := &PostgresReport{
 			PostgresResults: listOfResults,
 			PostgresVersion: database,
+			ServerName:      serverName,
 		}
 		h.AddTab("Postgres Security Report", tabData)
 		return
@@ -101,6 +103,7 @@ func (h *HtmlReportHelper) RegisterPostgresReportData(listOfResults []*model.Res
 		PostgresResults: listOfResults,
 		Summary:         data,
 		PostgresVersion: database,
+		ServerName:      serverName,
 	}
 	h.AddTab("Postgres Security Report", tabData)
 }

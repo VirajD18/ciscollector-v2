@@ -1,6 +1,11 @@
 {{ define "postgresTab" }}
     <div class="wrapper">
         <div class="myContainer">
+	    {{ if .ServerName }}
+                <h2 style="text-align: center; color: #373854; margin-bottom: 20px; display: none;">
+                    {{ .ServerName }} Secure
+                </h2>
+            {{ end }}
             {{ if .Summary }}
                 <div id="summaryStats">
                     <h3>Summary</h3>

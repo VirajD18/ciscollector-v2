@@ -90,7 +90,7 @@ func (p *postgresRunner) run(ctx context.Context) (map[int]*model.Status, error)
 	}
 
 	p.htmlReportHelper.RegisterPostgresReportData(listOfResults, scoreMap,
-		version, p.postgresCheckSet.Len() == 0 /* when there is any data from custom template then we need to skip summary part in htmlreport */)
+		version, p.postgresConfig.Host, p.postgresCheckSet.Len() == 0 /* when there is any data from custom template then we need to skip summary part in htmlreport */)
 	p.htmlReportHelper.RegisterUserlistData(out)
 
 	return scoreMap, nil
